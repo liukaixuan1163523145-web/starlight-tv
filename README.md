@@ -2,7 +2,7 @@
 
 为遥控器和客厅大屏设计的 Android TV 影音播放器。基于 [LibreSpark/LibreTV](https://github.com/LibreSpark/LibreTV) 的 Next.js 版本改造，服务端随 APK 在电视本机运行。
 
-**[下载最新 APK](https://github.com/zimingsss1163523145-pixel/starlight-tv/releases/latest)** · [安装与操作](docs/USAGE.md) · [从源码构建](docs/BUILD.md) · [上游与许可证](THIRD_PARTY_NOTICES.md)
+**[下载最新 APK](https://github.com/liukaixuan1163523145-web/starlight-tv/releases/latest)** · [安装与操作](docs/USAGE.md) · [从源码构建](docs/BUILD.md) · [上游与许可证](THIRD_PARTY_NOTICES.md)
 
 ![星幕 TV](android/res/drawable/tv_banner.png)
 
