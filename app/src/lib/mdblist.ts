@@ -93,6 +93,7 @@ async function refresh(type: MediaType, cursor?: string, pages = 0): Promise<Fee
   return feed;
 }
 export async function extendMDBFeed(type: MediaType) {
+  if (process.env.RECOMMEND_LOCAL_ONLY === '1' || !process.env.MDBLIST_API_KEY) return { done: true, feed: await readFeed(type) };
   let progress: Progress | undefined;
   try { progress = JSON.parse(await fs.readFile(path.join(cacheDir(), 'progress-' + type + '.json'), 'utf8')); } catch { /* initial expansion */ }
   if (progress?.done && Date.now() - progress.updatedAt < TTL) return { done: true, feed: await readFeed(type) };
@@ -100,10 +101,13 @@ export async function extendMDBFeed(type: MediaType) {
   const job = refresh(type, progress?.done ? undefined : progress?.cursor, progress?.done ? 0 : progress?.pages || 0).finally(() => pending.delete(type));
   pending.set(type, job);return { done: false, feed: await job };
 }
-export async function getMDBFeed(type: MediaType): Promise<Feed & { stale: boolean }> {
-  if (!process.env.MDBLIST_API_KEY) throw new Error('MDBList 尚未配置');
+export async function getMDBFeed(type: MediaType): Promise<Feed & { stale: boolean; localOnly?: boolean }> {
   let old = memory.get(type);
   if (!old) { try { const saved = JSON.parse(await fs.readFile(path.join(cacheDir(), type + '.json'), 'utf8')) as Feed; if (Array.isArray(saved.items) && typeof saved.fetchedAt === 'number') { old = saved; memory.set(type, saved); } } catch { /* first use */ } }
+  if (process.env.RECOMMEND_LOCAL_ONLY === '1' || !process.env.MDBLIST_API_KEY) {
+    if (old) return { ...old, stale: Date.now() - old.fetchedAt >= TTL, localOnly: true };
+    throw new Error('尚无本地烂番茄数据，请安装包含本地数据的版本');
+  }
   if (old && Date.now() - old.fetchedAt < TTL) return { ...old, stale: false };
   let job = pending.get(type);
   if (!job && Date.now() >= (retryAfter.get(type) || 0)) { job = refresh(type).catch(error => { retryAfter.set(type, Date.now() + 900000); throw error; }).finally(() => { pending.delete(type); }); pending.set(type, job); }

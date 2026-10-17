@@ -1,7 +1,11 @@
 import type { DoubanItem } from './types';
 import { fetchUpstream } from './fetch-utils';
 import { diskFeedCache } from './recommendation-cache';
+import { recommendationRoot } from './recommendation-cache';
+import { promises as fs } from 'node:fs';
+import path from 'node:path';
 const cachedFeed = diskFeedCache<DoubanItem>('douban');
+let localCatalog: Record<string, { items: DoubanItem[]; fetchedAt: number }> | undefined;
 
 /**
  * 豆瓣推荐数据获取（服务端直连，带内存缓存与降级链）。
@@ -85,6 +89,11 @@ async function loadDoubanRecommend(
   return items;
 }
 
-export function fetchDoubanFeed(type: 'movie' | 'tv', tag: string, pageStart: number, pageSize: number) {
+export async function fetchDoubanFeed(type: 'movie' | 'tv', tag: string, pageStart: number, pageSize: number) {
+  if (process.env.RECOMMEND_LOCAL_ONLY === '1') {
+    if (!localCatalog) localCatalog = JSON.parse(await fs.readFile(path.join(recommendationRoot(), 'local-catalog.json'), 'utf8'));
+    const feed = localCatalog?.[`${type}:${tag}`];
+    return { items: feed?.items.slice(pageStart, pageStart + pageSize) || [], fetchedAt: feed?.fetchedAt || 0, stale: false, refreshing: false, localOnly: true };
+  }
   return cachedFeed(`${type}:${tag}:${pageStart}:${pageSize}`, () => loadDoubanRecommend(type, tag, pageStart, pageSize));
 }

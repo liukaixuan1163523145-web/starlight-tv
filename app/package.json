@@ -1,6 +1,6 @@
 {
   "name": "starlight-tv",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "private": true,
   "description": "星幕 TV：基于 LibreTV 的 Android TV 客厅影音播放器",
   "license": "AGPL-3.0-or-later",

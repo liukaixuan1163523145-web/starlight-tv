@@ -19,7 +19,8 @@ cd ..
 
 ```powershell
 python scripts/prepare-runtime.py
-python scripts/package-payload.py
+python scripts/download-local-data.py
+python scripts/package-payload.py --local-data .build/Starlight-TV-1.1.2-local-data.zip
 $env:ANDROID_SDK_ROOT='C:\Android\Sdk'
 $env:JAVA_HOME='C:\Java\jdk-17'
 $env:STARLIGHT_KEYSTORE='C:\private\release.jks'
@@ -34,6 +35,10 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-apk.ps1
 Termux 官方镜像可能清理旧版本包。若锁定包下载不可用，请找可信归档并按 `runtime-provenance.json` 校验；不能悄悄用未验证的新版本替代。
 
 ## 配置与 MDBList
+
+当前源码构建的是 `1.1.2-local`。数据 ZIP 独立附在同一 Release，`local-data-manifest.json` 固定其 SHA256。安装包内包含这份 ZIP；普通使用者只下载 APK 即可。片单、评分、原始数据日期和海报均为公开字段，不含个人配置。自行替换数据时用 `scripts/build-local-data.py --input <白名单缓存目录> --output <ZIP路径>` 生成新清单，再构建 APK。
+
+本地版由包内 `edition.json` 固定启用 `RECOMMEND_LOCAL_ONLY=1`，并在启动时从子进程环境移除 MDBList Key；不要求用户配置密钥，也不联网刷新评分或海报。下文密钥配置仅适用于 1.1.1 联网版或开发者自己的联网部署。
 
 预置公开来源及搜索超时保存在 `android/defaults.json`；只允许 `DEFAULT_SOURCES`、`SEARCH_MAX_PAGES`、`SEARCH_SOURCE_TIMEOUT_MS`。不要把 API Key 或固定密码放进它或 APK。首次启动会生成本机随机登录密码。
 
@@ -51,5 +56,5 @@ APK 内 `assets/payload.zip` 包含 ARM Node、必需动态库、Next standalone
 
 - API 28 最低版本；其他 Android 版本未全面测试，尤其新版系统的可执行文件策略。
 - 公共播放器接口可能失效；缓存不是影片下载，也不保证持续可播放。
-- 1.1.0 的物理电视功能已验收；1.1.1 是品牌与发布整理，构建和包检查记录不等同于所有电视的兼容认证。
+- 1.1.0 的物理电视功能已验收；后续版本的构建、无外网推荐测试及包检查不等同于所有电视的兼容认证，具体实机验收状态以发布记录为准。
 - 上游依赖的安全状态应持续维护；本次改名不进行跨版本升级。请勿把电视内置服务暴露到公网。

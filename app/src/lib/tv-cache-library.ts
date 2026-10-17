@@ -26,9 +26,11 @@ export async function cacheStats() {
   try { for(const name of await fs.readdir(path.join(recommendationRoot(),'posters'))){if(!name.endsWith('.json'))continue;const stat=await fs.stat(path.join(recommendationRoot(),'posters',name));bytes+=stat.size;posters++;} } catch { /* first run */ }
   const mdb: number[]=[];for(const type of ['movie','show']){try{const data=JSON.parse(await fs.readFile(path.join(process.env.MDBLIST_CACHE_DIR||'.mdblist-cache',type+'.json'),'utf8'));mdb.push(data.items.length);}catch{mdb.push(0);}}
   const value={doubanItems:ids.size,doubanPages:pages,mdblistMovies:mdb[0],mdblistShows:mdb[1],posters,posterMiB:Math.round(bytes/1048576),pendingPosters:s.posters.length,finishedDouban:s.done.every(Boolean),finishedMDB:s.mdbDone.every(Boolean),paused,busy:!!busy,error:s.error,limits:{doubanPages:600,posterMiB:512,posters:8000,mdbEach:3000},quota:getMDBQuota(),updatedAt:s.updatedAt};
-  statsCache={at:Date.now(),value};return value;
+  const result = { ...value, localOnly: process.env.RECOMMEND_LOCAL_ONLY === '1' };
+  statsCache={at:Date.now(),value:result};return result;
 }
 export async function warmCacheStep(postersOnly=false) {
+  if(process.env.RECOMMEND_LOCAL_ONLY === '1')return {done:true,localOnly:true,pendingPosters:0};
   if(busy)return {busy:true};if(paused)return {paused:true};
   busy=(async()=>{
     const s=await load();s.error='';

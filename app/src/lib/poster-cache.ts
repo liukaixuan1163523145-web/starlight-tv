@@ -25,6 +25,7 @@ export async function getPoster(url: string): Promise<Poster & { cached: boolean
     if (Date.now() - (touched.get(key) || 0) > 3600000) { touched.delete(key); touched.set(key, Date.now()); while(touched.size>8000)touched.delete(touched.keys().next().value!); const now=new Date();await fs.utimes(file,now,now).catch(()=>{}); }
     return { ...saved, cached: true };
   } } catch { /* cache miss */ }
+  if (process.env.RECOMMEND_LOCAL_ONLY === '1') throw Error('Poster not included in local snapshot');
   let job = pending.get(key);
   if (!job) {
     job = (async () => {

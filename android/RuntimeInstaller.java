@@ -7,7 +7,7 @@ import java.security.SecureRandom;
 import org.json.JSONObject;
 
 final class RuntimeInstaller {
-  static final String VERSION="1.1.1-starlight-20261018";
+  static final String VERSION="1.1.2-local-starlight-20261018";
   static File root(Context c){return new File(c.getFilesDir(),"embedded");}
   static byte[] read(InputStream in) throws IOException {try(InputStream i=in;ByteArrayOutputStream o=new ByteArrayOutputStream()){byte[] b=new byte[65536];int n;while((n=i.read(b))!=-1)o.write(b,0,n);return o.toByteArray();}}
   static void write(File file,byte[] bytes) throws IOException {file.getParentFile().mkdirs();try(FileOutputStream o=new FileOutputStream(file)){o.write(bytes);o.getFD().sync();}}
@@ -15,6 +15,31 @@ final class RuntimeInstaller {
   static void unzip(InputStream input,File dest) throws IOException {
     dest.mkdirs();String prefix=dest.getCanonicalPath()+File.separator;
     try(ZipInputStream zip=new ZipInputStream(input)){ZipEntry e;byte[] b=new byte[65536];while((e=zip.getNextEntry())!=null){File f=new File(dest,e.getName());if(!f.getCanonicalPath().startsWith(prefix))throw new IOException("Invalid package path");if(e.isDirectory()){f.mkdirs();continue;}f.getParentFile().mkdirs();try(FileOutputStream out=new FileOutputStream(f)){int n;while((n=zip.read(b))!=-1)out.write(b,0,n);}}}
+  }
+  static void importLocalData(Context c) throws Exception {
+    File data=new File(c.getFilesDir(),"data"),done=new File(data,"local-data-1.1.2.ready");
+    if(done.exists())return;
+    ServerService.message="正在准备本地片单和海报，首次启动请稍候…";
+    data.mkdirs();String prefix=data.getCanonicalPath()+File.separator;
+    try(ZipInputStream zip=new ZipInputStream(c.getAssets().open("local-data.zip"))){
+      ZipEntry e;byte[] buffer=new byte[65536];
+      while((e=zip.getNextEntry())!=null){
+        if(e.isDirectory())continue;
+        String name=e.getName();
+        if(!(name.startsWith("mdblist-cache/")||name.startsWith("recommendation-cache/")||name.equals("snapshot-info.json")))throw new IOException("Invalid local data entry");
+        File file=new File(data,name);
+        if(!file.getCanonicalPath().startsWith(prefix))throw new IOException("Invalid local data path");
+        if(file.exists()&&name.startsWith("recommendation-cache/posters/"))continue;
+        file.getParentFile().mkdirs();File temp=new File(file.getPath()+".seed-tmp");
+        try(FileOutputStream out=new FileOutputStream(temp)){int n;while((n=zip.read(buffer))!=-1)out.write(buffer,0,n);}
+        // Preserve fresher recommendations when upgrading an existing installation.
+        if(file.exists()&&(name.startsWith("mdblist-cache/")||name.startsWith("recommendation-cache/douban/"))){
+          try{JSONObject before=new JSONObject(new String(read(new FileInputStream(file)),"UTF-8"));JSONObject incoming=new JSONObject(new String(read(new FileInputStream(temp)),"UTF-8"));if(before.optLong("fetchedAt")>=incoming.optLong("fetchedAt")){temp.delete();continue;}}catch(Exception ignored){}
+        }
+        if(!temp.renameTo(file))throw new IOException("Cannot import local recommendation data");
+      }
+    }
+    write(done,VERSION.getBytes("UTF-8"));
   }
   static synchronized File prepare(Context c) throws Exception {
     File root=root(c),marker=new File(root,"version");
@@ -35,6 +60,7 @@ final class RuntimeInstaller {
     }
     File migration=new File(c.getFilesDir(),"cache-migration.zip");
     if(migration.exists()){unzip(new FileInputStream(migration),new File(c.getFilesDir(),"data"));if(!migration.delete())throw new IOException("Cannot finish cache migration");}
+    importLocalData(c);
     return root;
   }
 }

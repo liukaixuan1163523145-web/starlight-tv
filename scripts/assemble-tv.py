@@ -54,7 +54,7 @@ s=s.replace("document.getElementById('source-count').textContent=sources.length+
 for d in [p/'tv',p/'app/public/tv']:
     (d/'tv.js').write_text(s,encoding='utf-8')
     import re
-    html=re.sub(r'(tv\.(?:js|css)\?v=)[^\"<]+',r'\g<1>starlight-111-20261018',(p/'tv/tv.html').read_text(encoding='utf-8'))
+    html=re.sub(r'(tv\.(?:js|css)\?v=)[^\"<]+',r'\g<1>starlight-local-112-20261018',(p/'tv/tv.html').read_text(encoding='utf-8'))
     (d/'tv.html').write_text(html,encoding='utf-8')
 css=(p/'tv/tv.css').read_text(encoding='utf-8')
 if '/* Live TV */' not in css: css+='\n/* Live TV */\n.live-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-gap:1.3vw}.live-card{min-height:7vw;padding:1.2vw;text-align:left}.live-card strong{display:block;font-size:1.5vw;margin:.7vw 0}.live-card small{color:#a8bed1;font-size:1.05vw}.live-number{font-size:1.1vw;color:#7df1d1;font-weight:bold}\n'

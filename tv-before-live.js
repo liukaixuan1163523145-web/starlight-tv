@@ -93,8 +93,8 @@ var regionalCatalog={"台剧": [{"title": "想见你", "cover": "https://img.bfz
 function el(tag,cls,text){var e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=text;return e;}
 function networkApi(path,body){return fetch(path,{method:body?'POST':'GET',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:body?JSON.stringify(body):undefined}).then(function(r){if(!r.ok)return r.text().then(function(t){throw new Error(r.status===401?'登录已失效，请重新打开应用':('请求失败 '+r.status));});return r.json();});}
 var recommendationCache=TVRecommendationCache.create(localStorage);
-function api(path,body){if(!body&&/^\/api\/(douban|mdblist)\?/.test(path))return recommendationCache.get(path,function(){return networkApi(path);});return networkApi(path,body);}
-function cacheLabel(data){return (data.localCache||data.stale?'本地缓存':'片单已缓存')+(data.fetchedAt?' · '+new Date(data.fetchedAt).toLocaleDateString():'')+(data.stale?' · 后台更新中':'');}
+function api(path,body){if(!body&&!localOnly&&/^\/api\/(douban|mdblist)\?/.test(path))return recommendationCache.get(path,function(){return networkApi(path);});return networkApi(path,body);}
+function cacheLabel(data){if(data.localOnly)return '内置本地片单'+(data.fetchedAt?' · 数据日期 '+new Date(data.fetchedAt).toLocaleDateString():'');return (data.localCache||data.stale?'本地缓存':'片单已缓存')+(data.fetchedAt?' · '+new Date(data.fetchedAt).toLocaleDateString():'')+(data.stale?' · 后台更新中':'');}
 function button(text,row,col,action,cls){var b=el('button',cls,text);b.dataset.row=row;b.dataset.col=col;b.dataset.focus='r'+row+'c'+col;b.onclick=function(){action();};return b;}
 function focus(row,col){var all=Array.prototype.slice.call(document.querySelectorAll('[data-row]')).filter(function(b){return b.offsetWidth&&b.offsetHeight;});var same=all.filter(function(b){return +b.dataset.row===row;});same.sort(function(a,b){return Math.abs(+a.dataset.col-col)-Math.abs(+b.dataset.col-col);});if(same[0]){same[0].focus();same[0].scrollIntoView({block:'nearest',inline:'nearest'});}}
 function title(t,sub){content.appendChild(el('h1','',t));if(sub)content.appendChild(el('p','subtitle',sub));}
@@ -185,5 +185,5 @@ window.__tvRemote=function(key,repeat){
 };
 window.addEventListener('keydown',function(e){var keys={13:'enter',23:'enter',37:'left',38:'up',39:'right',40:'down',32:'play',27:'back',179:'play',227:'rewind',228:'forward'};if(keys[e.keyCode]&&window.__tvRemote(keys[e.keyCode],e.repeat)){e.preventDefault();e.stopImmediatePropagation();}},true);
 window.addEventListener('keyup',function(e){if(playing&&[37,39,227,228].indexOf(e.keyCode)>=0)playbackControls.release();},true);
-api('/api/status').then(function(s){if(!s.verified)throw new Error('登录失效，请重新打开应用');sources=(s.defaultSources||[]).map(function(x,i){return {key:'tv-'+i,name:x.name,url:x.url,isAdult:false};});availability=TVAvailability.create({sources:sources,fetch:window.fetch.bind(window),storage:localStorage});document.getElementById('source-count').textContent=sources.length+' 个影视来源';home(false);}).catch(error);
+api('/api/status').then(function(s){localOnly=!!s.localOnly;if(localOnly){cacheEnabled=false;localStorage.removeItem('tv-recommendation-data');}if(!s.verified)throw new Error('登录失效，请重新打开应用');sources=(s.defaultSources||[]).map(function(x,i){return {key:'tv-'+i,name:x.name,url:x.url,isAdult:false};});availability=TVAvailability.create({sources:sources,fetch:window.fetch.bind(window),storage:localStorage});document.getElementById('source-count').textContent=sources.length+' 个影视来源';home(false);}).catch(error);
 })();

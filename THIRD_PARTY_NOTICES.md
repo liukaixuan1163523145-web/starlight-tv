@@ -15,3 +15,6 @@
 - Termux 包构建源：https://github.com/termux/termux-packages
 
 可分发的上游许可证文本附于 `licenses/`。ADB、Android SDK、JDK 和签名私钥不包含在本仓库或 APK 中。
+# 本地推荐数据说明
+
+本地数据版附带从豆瓣与 MDBList 返回的公开片单、评分、来源时间和既有海报快照。烂番茄评分通过 MDBList 整理，保留可用的原站评分链接。代码许可证不改变第三方海报、数据及品牌标识的权利归属。数据文件和校验值随 Release 提供，来源不代表合作或官方背书。

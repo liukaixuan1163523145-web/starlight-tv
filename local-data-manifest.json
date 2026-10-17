@@ -1,0 +1,31 @@
+{
+  "file": "Starlight-TV-1.1.2-local-data.zip",
+  "sha256": "d36e36351bd0070bd67466cca2a5439d7cbbbaa43791c7512a860e7c4e51558b",
+  "bytes": 155693468,
+  "entries": 6742,
+  "snapshot": {
+    "schema": 1,
+    "edition": "local",
+    "exportedAt": 1792265386167,
+    "doubanItems": 3967,
+    "doubanPages": 164,
+    "mdblistMovies": 2901,
+    "mdblistShows": 1622,
+    "posters": 6574,
+    "posterCandidates": 8489,
+    "feeds": [
+      "movie:豆瓣高分",
+      "movie:经典",
+      "movie:热门",
+      "tv:热门",
+      "tv:国产剧",
+      "tv:港剧",
+      "tv:韩剧",
+      "tv:美剧",
+      "tv:日本动画",
+      "tv:综艺"
+    ],
+    "fields": "public titles, ratings, poster images and source timestamps only; no credentials or viewing history"
+  },
+  "download": "https://github.com/liukaixuan1163523145-web/starlight-tv/releases/download/v1.1.2-local/Starlight-TV-1.1.2-local-data.zip"
+}

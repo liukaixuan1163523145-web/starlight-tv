@@ -1,9 +1,15 @@
 """Package a standalone Next build and ARM runtime without personal configuration."""
 from pathlib import Path
-import json,re,zipfile,shutil
+import json,re,zipfile,shutil,argparse,hashlib
 root=Path(__file__).resolve().parent.parent
 app=root/'app';runtime=root/'.tools/runtime';assets=root/'.build/assets'
 assets.mkdir(parents=True,exist_ok=True)
+parser=argparse.ArgumentParser()
+parser.add_argument('--local-data',type=Path,required=True,help='Verified public recommendation snapshot ZIP')
+args=parser.parse_args()
+manifest=json.loads((root/'local-data-manifest.json').read_text('utf8'))
+if hashlib.sha256(args.local_data.read_bytes()).hexdigest()!=manifest['sha256']:raise ValueError('Local dataset checksum mismatch')
+shutil.copy2(args.local_data,assets/'local-data.zip')
 defaults=json.loads((root/'android/defaults.json').read_text('utf8'))
 if any(k not in {'DEFAULT_SOURCES','SEARCH_MAX_PAGES','SEARCH_SOURCE_TIMEOUT_MS'} for k in defaults): raise ValueError('Unexpected/default credential key')
 (assets/'defaults.json').write_text(json.dumps(defaults,ensure_ascii=False),'utf8')
@@ -31,4 +37,5 @@ with zipfile.ZipFile(assets/'payload.zip','w',zipfile.ZIP_DEFLATED,compresslevel
     z.write(root/'android/start.cjs','start.cjs')
     z.write(root/'runtime-provenance.json','runtime-provenance.json')
     z.write(root/'THIRD_PARTY_NOTICES.md','THIRD_PARTY_NOTICES.md')
+    z.writestr('edition.json',json.dumps({'localOnly':True,'snapshot':manifest['snapshot']}))
 print('Created .build/assets/payload.zip, %.2f MiB'%((assets/'payload.zip').stat().st_size/1048576))
