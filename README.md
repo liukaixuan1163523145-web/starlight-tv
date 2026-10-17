@@ -42,4 +42,10 @@
 
 **[通过 Wise 赞助星幕 TV](https://wise.com/pay/me/liukaixuanl)**
 
+**PayPal：使用 PayPal App 扫描下方收款码**，并在付款前核对收款人为 **KAIXUAN LIU**。
+
+<a href="https://www.paypal.com/qrcodes/p2pqrc/8CRQPPS3MX2MA"><img src="docs/assets/paypal-qr.jpg" alt="KAIXUAN LIU 的 PayPal 收款二维码" width="280"></a>
+
+[打开 PayPal 收款码链接](https://www.paypal.com/qrcodes/p2pqrc/8CRQPPS3MX2MA)。电脑浏览器可能跳转到 PayPal 应用介绍页，此时请改用 PayPal App 扫码；尚未进行实际付款验证。
+
 赞助不会解锁额外影片、播放源或会员权限，也不附带专属售后或永久更新承诺。项目继续按 AGPL-3.0-or-later 提供源码，是否赞助不影响现有功能的使用。
