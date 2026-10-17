@@ -1,0 +1,32 @@
+[
+  {
+    "name": "node-LICENSE.txt",
+    "bytes": 157606,
+    "url": "https://raw.githubusercontent.com/nodejs/node/v24.18.0/LICENSE"
+  },
+  {
+    "name": "openssl-LICENSE.txt",
+    "bytes": 10175,
+    "url": "https://raw.githubusercontent.com/openssl/openssl/openssl-3.6.5/LICENSE.txt"
+  },
+  {
+    "name": "libcxx-LICENSE.txt",
+    "bytes": 16703,
+    "url": "https://raw.githubusercontent.com/llvm/llvm-project/main/libcxx/LICENSE.TXT"
+  },
+  {
+    "name": "icu-LICENSE.txt",
+    "bytes": 27718,
+    "url": "https://raw.githubusercontent.com/unicode-org/icu/main/LICENSE"
+  },
+  {
+    "name": "c-ares-LICENSE.txt",
+    "bytes": 1211,
+    "url": "https://raw.githubusercontent.com/c-ares/c-ares/v1.34.8/LICENSE.md"
+  },
+  {
+    "name": "zlib-LICENSE.txt",
+    "bytes": 1002,
+    "url": "https://raw.githubusercontent.com/madler/zlib/v1.3.2/LICENSE"
+  }
+]

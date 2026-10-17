@@ -1,0 +1,17 @@
+node_modules/
+.next/
+*.tsbuildinfo
+.env
+.env.*
+!.env.example
+.tools/
+.build/
+dist/
+*.apk
+*.keystore
+*.jks
+*.log
+server-config.json
+*private*
+*cache-migration*
+data/

@@ -1,0 +1,1036 @@
+{
+  "source": "https://github.com/iptv-org/iptv",
+  "validation": "TV server proxy + desktop Chromium video decoding; physical TV acceptance pending",
+  "channels": [
+    {
+      "id": "966e48269241",
+      "name": "CCTV-1 综合",
+      "group": "央视",
+      "url": "http://74.91.26.218:82/live/cctv1hd.m3u8",
+      "sources": [
+        {
+          "url": "http://74.91.26.218:82/live/cctv1hd.m3u8",
+          "width": 1280,
+          "height": 720
+        },
+        {
+          "url": "http://198.204.228.26/live/cctv1hd.m3u8",
+          "width": 1280,
+          "height": 720
+        }
+      ],
+      "height": 720
+    },
+    {
+      "id": "430fad5ac5cf",
+      "name": "CCTV-2 财经",
+      "group": "央视",
+      "url": "http://74.91.26.218:82/live/cctv2hd.m3u8",
+      "sources": [
+        {
+          "url": "http://74.91.26.218:82/live/cctv2hd.m3u8",
+          "width": 1280,
+          "height": 720
+        },
+        {
+          "url": "http://198.204.228.26/live/cctv2hd.m3u8",
+          "width": 1280,
+          "height": 720
+        },
+        {
+          "url": "http://107.150.60.122/live/cctv2hd.m3u8",
+          "width": 1280,
+          "height": 720
+        }
+      ],
+      "height": 720
+    },
+    {
+      "id": "f83c190f8bc5",
+      "name": "CCTV-3 综艺",
+      "group": "央视",
+      "url": "http://74.91.26.218:82/live/cctv3hd.m3u8",
+      "sources": [
+        {
+          "url": "http://74.91.26.218:82/live/cctv3hd.m3u8",
+          "width": 1280,
+          "height": 720
+        }
+      ],
+      "height": 720
+    },
+    {
+      "id": "03998edf801a",
+      "name": "CCTV-4 中文国际",
+      "group": "央视",
+      "url": "http://74.91.26.218:82/live/cctv4hd.m3u8",
+      "sources": [
+        {
+          "url": "http://74.91.26.218:82/live/cctv4hd.m3u8",
+          "width": 1280,
+          "height": 720
+        },
+        {
+          "url": "http://107.150.60.122/live/cctv4hd.m3u8",
+          "width": 1280,
+          "height": 720
+        }
+      ],
+      "height": 720
+    },
+    {
+      "id": "cc43d62a7624",
+      "name": "CCTV-5 体育",
+      "group": "央视",
+      "url": "http://74.91.26.218:82/live/cctv5hd.m3u8",
+      "sources": [
+        {
+          "url": "http://74.91.26.218:82/live/cctv5hd.m3u8",
+          "width": 1280,
+          "height": 720
+        },
+        {
+          "url": "http://107.150.60.122/live/cctv5hd.m3u8",
+          "width": 1280,
+          "height": 720
+        }
+      ],
+      "height": 720
+    },
+    {
+      "id": "08ffab0d4268",
+      "name": "CCTV-6 电影",
+      "group": "央视",
+      "url": "http://74.91.26.218:82/live/cctv6hd.m3u8",
+      "sources": [
+        {
+          "url": "http://74.91.26.218:82/live/cctv6hd.m3u8",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "url": "http://198.204.228.26/live/cctv6hd.m3u8",
+          "width": 1280,
+          "height": 720
+        }
+      ],
+      "height": 1080
+    },
+    {
+      "id": "5f08c93ca779",
+      "name": "CCTV-7 国防军事",
+      "group": "央视",
+      "url": "http://107.150.60.122/live/cctv7hd.m3u8",
+      "sources": [
+        {
+          "url": "http://107.150.60.122/live/cctv7hd.m3u8",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "url": "http://74.91.26.218:82/live/cctv7hd.m3u8",
+          "width": 1280,
+          "height": 720
+        }
+      ],
+      "height": 1080
+    },
+    {
+      "id": "e78ab0b88758",
+      "name": "CCTV-8 电视剧",
+      "group": "央视",
+      "url": "http://74.91.26.218:82/live/cctv8hd.m3u8",
+      "sources": [
+        {
+          "url": "http://74.91.26.218:82/live/cctv8hd.m3u8",
+          "width": 1280,
+          "height": 720
+        }
+      ],
+      "height": 720
+    },
+    {
+      "id": "8d84a308bd46",
+      "name": "CCTV-9 纪录",
+      "group": "央视",
+      "url": "http://107.150.60.122/live/cctv9hd.m3u8",
+      "sources": [
+        {
+          "url": "http://107.150.60.122/live/cctv9hd.m3u8",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "url": "http://198.204.228.26/live/cctv9hd.m3u8",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "url": "http://74.91.26.218:82/live/cctv9hd.m3u8",
+          "width": 1280,
+          "height": 720
+        }
+      ],
+      "height": 1080
+    },
+    {
+      "id": "f9a3da70b56c",
+      "name": "CCTV-10 科教",
+      "group": "央视",
+      "url": "http://74.91.26.218:82/live/cctv10hd.m3u8",
+      "sources": [
+        {
+          "url": "http://74.91.26.218:82/live/cctv10hd.m3u8",
+          "width": 1280,
+          "height": 720
+        }
+      ],
+      "height": 720
+    },
+    {
+      "id": "b8c7e96959f1",
+      "name": "CCTV-11 戏曲",
+      "group": "央视",
+      "url": "http://198.204.228.26/live/cctv11hd.m3u8",
+      "sources": [
+        {
+          "url": "http://198.204.228.26/live/cctv11hd.m3u8",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "url": "http://74.91.26.218:82/live/cctv11hd.m3u8",
+          "width": 1280,
+          "height": 720
+        }
+      ],
+      "height": 1080
+    },
+    {
+      "id": "0c72b109e7ce",
+      "name": "CCTV-12 社会与法",
+      "group": "央视",
+      "url": "http://74.91.26.218:82/live/cctv12hd.m3u8",
+      "sources": [
+        {
+          "url": "http://74.91.26.218:82/live/cctv12hd.m3u8",
+          "width": 1280,
+          "height": 720
+        },
+        {
+          "url": "http://107.150.60.122/live/cctv12hd.m3u8",
+          "width": 1280,
+          "height": 720
+        }
+      ],
+      "height": 720
+    },
+    {
+      "id": "130e0c59fddd",
+      "name": "CCTV-13 新闻",
+      "group": "央视",
+      "url": "http://ali-m-l.cztv.com/channels/lantian/channel21/1080p.m3u8",
+      "sources": [
+        {
+          "url": "http://ali-m-l.cztv.com/channels/lantian/channel21/1080p.m3u8",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "url": "http://74.91.26.218:82/live/cctv13hd.m3u8",
+          "width": 1280,
+          "height": 720
+        }
+      ],
+      "height": 1080
+    },
+    {
+      "id": "c88f2f381779",
+      "name": "CCTV-14 少儿",
+      "group": "央视",
+      "url": "http://74.91.26.218:82/live/cctv14hd.m3u8",
+      "sources": [
+        {
+          "url": "http://74.91.26.218:82/live/cctv14hd.m3u8",
+          "width": 1280,
+          "height": 720
+        },
+        {
+          "url": "http://198.204.228.26/live/cctv14hd.m3u8",
+          "width": 1280,
+          "height": 720
+        }
+      ],
+      "height": 720
+    },
+    {
+      "id": "f7544fccf78d",
+      "name": "CCTV-15 音乐",
+      "group": "央视",
+      "url": "http://74.91.26.218:82/live/cctv15hd.m3u8",
+      "sources": [
+        {
+          "url": "http://74.91.26.218:82/live/cctv15hd.m3u8",
+          "width": 1280,
+          "height": 720
+        },
+        {
+          "url": "http://198.204.228.26/live/cctv15hd.m3u8",
+          "width": 1280,
+          "height": 720
+        }
+      ],
+      "height": 720
+    },
+    {
+      "id": "fc960b656247",
+      "name": "CCTV-16 奥林匹克",
+      "group": "央视",
+      "url": "http://74.91.26.218:82/live/cctv16hd.m3u8",
+      "sources": [
+        {
+          "url": "http://74.91.26.218:82/live/cctv16hd.m3u8",
+          "width": 1920,
+          "height": 1080
+        }
+      ],
+      "height": 1080
+    },
+    {
+      "id": "a5f161c72441",
+      "name": "CCTV-17 农业农村",
+      "group": "央视",
+      "url": "http://74.91.26.218:82/live/cctv17hd.m3u8",
+      "sources": [
+        {
+          "url": "http://74.91.26.218:82/live/cctv17hd.m3u8",
+          "width": 1920,
+          "height": 1080
+        }
+      ],
+      "height": 1080
+    },
+    {
+      "id": "8ac6f399c68d",
+      "name": "东方卫视",
+      "group": "卫视",
+      "url": "https://bp-resource-dfl.bestv.cn/148/3/video.m3u8",
+      "sources": [
+        {
+          "url": "https://bp-resource-dfl.bestv.cn/148/3/video.m3u8",
+          "width": 1920,
+          "height": 1080
+        }
+      ],
+      "height": 1080
+    },
+    {
+      "id": "f404c3914c70",
+      "name": "内蒙古卫视",
+      "group": "卫视",
+      "url": "http://play1-qk.nmtv.cn/live/1769652018126032.m3u8",
+      "sources": [
+        {
+          "url": "http://play1-qk.nmtv.cn/live/1769652018126032.m3u8",
+          "width": 1920,
+          "height": 1080
+        }
+      ],
+      "height": 1080
+    },
+    {
+      "id": "75195251fede",
+      "name": "安多卫视",
+      "group": "卫视",
+      "url": "https://liveout.xntv.tv/a65jur/96iln2.m3u8",
+      "sources": [
+        {
+          "url": "https://liveout.xntv.tv/a65jur/96iln2.m3u8",
+          "width": 1920,
+          "height": 1080
+        }
+      ],
+      "height": 1080
+    },
+    {
+      "id": "b3773ee175e1",
+      "name": "山西卫视",
+      "group": "卫视",
+      "url": "http://119.39.9.8:9901/tsfile/live/0118_1.m3u8",
+      "sources": [
+        {
+          "url": "http://119.39.9.8:9901/tsfile/live/0118_1.m3u8",
+          "width": 1920,
+          "height": 1080
+        }
+      ],
+      "height": 1080
+    },
+    {
+      "id": "57f29fb1be8b",
+      "name": "延边卫视",
+      "group": "卫视",
+      "url": "https://srs.iyb983.cn/video/CYS/index.m3u8",
+      "sources": [
+        {
+          "url": "https://srs.iyb983.cn/video/CYS/index.m3u8",
+          "width": 1920,
+          "height": 1080
+        }
+      ],
+      "height": 1080
+    },
+    {
+      "id": "a723224ec6fe",
+      "name": "浙江卫视",
+      "group": "卫视",
+      "url": "https://ali-m-l.cztv.com/channels/lantian/channel001/1080p.m3u8",
+      "sources": [
+        {
+          "url": "https://ali-m-l.cztv.com/channels/lantian/channel001/1080p.m3u8",
+          "width": 1920,
+          "height": 1080
+        }
+      ],
+      "height": 1080
+    },
+    {
+      "id": "ad6307400bb5",
+      "name": "青海卫视",
+      "group": "卫视",
+      "url": "https://hls-qhmh.lanzhousobey.cn/qhmh/mhds.m3u8",
+      "sources": [
+        {
+          "url": "https://hls-qhmh.lanzhousobey.cn/qhmh/mhds.m3u8",
+          "width": 1920,
+          "height": 1080
+        }
+      ],
+      "height": 1080
+    },
+    {
+      "id": "d0095d3c519d",
+      "name": "黑龙江卫视",
+      "group": "卫视",
+      "url": "https://idclive.hljtv.com:4430/live/hljws_own.m3u8",
+      "sources": [
+        {
+          "url": "https://idclive.hljtv.com:4430/live/hljws_own.m3u8",
+          "width": 1920,
+          "height": 1080
+        }
+      ],
+      "height": 1080
+    },
+    {
+      "id": "3e0ba05489be",
+      "name": "中学生频道",
+      "group": "少儿教育",
+      "url": "http://live-play.zxstv.com.cn/zhongxuesheng/zhongxuesheng.m3u8",
+      "sources": [
+        {
+          "url": "http://live-play.zxstv.com.cn/zhongxuesheng/zhongxuesheng.m3u8",
+          "width": 1920,
+          "height": 1080
+        }
+      ],
+      "height": 1080
+    },
+    {
+      "id": "301f82237ed5",
+      "name": "浙江少儿",
+      "group": "少儿教育",
+      "url": "http://ali-m-l.cztv.com/channels/lantian/channel008/1080p.m3u8",
+      "sources": [
+        {
+          "url": "http://ali-m-l.cztv.com/channels/lantian/channel008/1080p.m3u8",
+          "width": 1920,
+          "height": 1080
+        }
+      ],
+      "height": 1080
+    },
+    {
+      "id": "a66da25422fb",
+      "name": "福州少儿",
+      "group": "少儿教育",
+      "url": "http://live.zohi.tv/video/s10001-fztv-4/index.m3u8",
+      "sources": [
+        {
+          "url": "http://live.zohi.tv/video/s10001-fztv-4/index.m3u8",
+          "width": 1920,
+          "height": 1080
+        }
+      ],
+      "height": 1080
+    },
+    {
+      "id": "4b5dc43c81fc",
+      "name": "上虞1新闻综合",
+      "group": "地方频道",
+      "url": "https://l.cztvcloud.com/channels/lantian/SXshangyu1/720p.m3u8",
+      "sources": [
+        {
+          "url": "https://l.cztvcloud.com/channels/lantian/SXshangyu1/720p.m3u8",
+          "width": 1920,
+          "height": 1080
+        }
+      ],
+      "height": 1080
+    },
+    {
+      "id": "383683ff6e53",
+      "name": "上虞3新商都",
+      "group": "地方频道",
+      "url": "https://l.cztvcloud.com/channels/lantian/SXshangyu3/720p.m3u8",
+      "sources": [
+        {
+          "url": "https://l.cztvcloud.com/channels/lantian/SXshangyu3/720p.m3u8",
+          "width": 1920,
+          "height": 1080
+        }
+      ],
+      "height": 1080
+    },
+    {
+      "id": "e9290770c1ef",
+      "name": "上虞经济文化",
+      "group": "地方频道",
+      "url": "https://l.cztvcloud.com/channels/lantian/SXshangyu2/720p.m3u8",
+      "sources": [
+        {
+          "url": "https://l.cztvcloud.com/channels/lantian/SXshangyu2/720p.m3u8",
+          "width": 1920,
+          "height": 1080
+        }
+      ],
+      "height": 1080
+    },
+    {
+      "id": "6eb6b9d71f35",
+      "name": "东莞新闻综合",
+      "group": "地方频道",
+      "url": "https://stream.sun0769.com/dgrtv1/mp4tv1_800/index.m3u8",
+      "sources": [
+        {
+          "url": "https://stream.sun0769.com/dgrtv1/mp4tv1_800/index.m3u8",
+          "width": 1280,
+          "height": 720
+        }
+      ],
+      "height": 720
+    },
+    {
+      "id": "1cae15accbf7",
+      "name": "余姚姚江文化",
+      "group": "地方频道",
+      "url": "https://l.cztvcloud.com/channels/lantian/SXyuyao3/720p.m3u8",
+      "sources": [
+        {
+          "url": "https://l.cztvcloud.com/channels/lantian/SXyuyao3/720p.m3u8",
+          "width": 720,
+          "height": 576
+        }
+      ],
+      "height": 576
+    },
+    {
+      "id": "540d7ad38697",
+      "name": "余姚新闻综合",
+      "group": "地方频道",
+      "url": "https://l.cztvcloud.com/channels/lantian/SXyuyao1/720p.m3u8",
+      "sources": [
+        {
+          "url": "https://l.cztvcloud.com/channels/lantian/SXyuyao1/720p.m3u8",
+          "width": 1920,
+          "height": 1080
+        }
+      ],
+      "height": 1080
+    },
+    {
+      "id": "9ae44805ac5d",
+      "name": "兰州文化旅游",
+      "group": "地方频道",
+      "url": "https://liveplus.lzr.com.cn/wlpd/HD/live.m3u8",
+      "sources": [
+        {
+          "url": "https://liveplus.lzr.com.cn/wlpd/HD/live.m3u8",
+          "width": 1920,
+          "height": 1080
+        }
+      ],
+      "height": 1080
+    },
+    {
+      "id": "267c11cd1912",
+      "name": "兰州新闻综合",
+      "group": "地方频道",
+      "url": "https://liveplus.lzr.com.cn/xwzh/HD/live.m3u8",
+      "sources": [
+        {
+          "url": "https://liveplus.lzr.com.cn/xwzh/HD/live.m3u8",
+          "width": 1920,
+          "height": 1080
+        }
+      ],
+      "height": 1080
+    },
+    {
+      "id": "1af3162e3ad7",
+      "name": "兴隆综合",
+      "group": "地方频道",
+      "url": "https://jwcdnqx.hebyun.com.cn/live/xlzh/1500k/tzwj_video.m3u8",
+      "sources": [
+        {
+          "url": "https://jwcdnqx.hebyun.com.cn/live/xlzh/1500k/tzwj_video.m3u8",
+          "width": 1920,
+          "height": 1080
+        }
+      ],
+      "height": 1080
+    },
+    {
+      "id": "eef49aa4e110",
+      "name": "农安新闻综合",
+      "group": "地方频道",
+      "url": "https://stream2.jlntv.cn/naxw/sd/live.m3u8",
+      "sources": [
+        {
+          "url": "https://stream2.jlntv.cn/naxw/sd/live.m3u8",
+          "width": 1024,
+          "height": 576
+        }
+      ],
+      "height": 576
+    },
+    {
+      "id": "f7d0c8012041",
+      "name": "前郭综合",
+      "group": "地方频道",
+      "url": "https://stream2.jlntv.cn/qg/sd/live.m3u8",
+      "sources": [
+        {
+          "url": "https://stream2.jlntv.cn/qg/sd/live.m3u8",
+          "width": 768,
+          "height": 576
+        }
+      ],
+      "height": 576
+    },
+    {
+      "id": "f03b4db21d16",
+      "name": "吉林市新闻综合",
+      "group": "地方频道",
+      "url": "https://stream2.jlntv.cn/jilin1/sd/live.m3u8",
+      "sources": [
+        {
+          "url": "https://stream2.jlntv.cn/jilin1/sd/live.m3u8",
+          "width": 1024,
+          "height": 576
+        }
+      ],
+      "height": 576
+    },
+    {
+      "id": "2a9bc73bea45",
+      "name": "哈尔滨影视",
+      "group": "地方频道",
+      "url": "https://stream.hrbtv.net/yspd/playlist.m3u8",
+      "sources": [
+        {
+          "url": "https://stream.hrbtv.net/yspd/playlist.m3u8",
+          "width": 640,
+          "height": 480
+        }
+      ],
+      "height": 480
+    },
+    {
+      "id": "f0c69a3deda6",
+      "name": "哈尔滨新闻综合",
+      "group": "地方频道",
+      "url": "https://stream.hrbtv.net/xwzh/playlist.m3u8?_upt=ef41dd531755913594",
+      "sources": [
+        {
+          "url": "https://stream.hrbtv.net/xwzh/playlist.m3u8?_upt=ef41dd531755913594",
+          "width": 640,
+          "height": 480
+        }
+      ],
+      "height": 480
+    },
+    {
+      "id": "8931daa1756b",
+      "name": "四平新闻综合",
+      "group": "地方频道",
+      "url": "http://stream2.jlntv.cn/sptv/sd/live.m3u8?_upt=f27750421743154598",
+      "sources": [
+        {
+          "url": "http://stream2.jlntv.cn/sptv/sd/live.m3u8?_upt=f27750421743154598",
+          "width": 1024,
+          "height": 576
+        }
+      ],
+      "height": 576
+    },
+    {
+      "id": "f2d7cc5d49d7",
+      "name": "嵊州综合",
+      "group": "地方频道",
+      "url": "https://l.cztvcloud.com/channels/lantian/SXshengzhou1/720p.m3u8",
+      "sources": [
+        {
+          "url": "https://l.cztvcloud.com/channels/lantian/SXshengzhou1/720p.m3u8",
+          "width": 1280,
+          "height": 720
+        }
+      ],
+      "height": 720
+    },
+    {
+      "id": "b5271eedeadd",
+      "name": "广州综合",
+      "group": "地方频道",
+      "url": "https://tencentplaybusiness.gztv.com/live/zonghes.m3u8",
+      "sources": [
+        {
+          "url": "https://tencentplaybusiness.gztv.com/live/zonghes.m3u8",
+          "width": 1280,
+          "height": 720
+        }
+      ],
+      "height": 720
+    },
+    {
+      "id": "2820d7d8e6ae",
+      "name": "延边新闻综合",
+      "group": "地方频道",
+      "url": "https://stream2.jlntv.cn/jlyb/sd/live.m3u8",
+      "sources": [
+        {
+          "url": "https://stream2.jlntv.cn/jlyb/sd/live.m3u8",
+          "width": 960,
+          "height": 540
+        }
+      ],
+      "height": 540
+    },
+    {
+      "id": "3c2220c28dca",
+      "name": "新疆哈语新闻综合",
+      "group": "地方频道",
+      "url": "https://st-video.xjmty.com/fs/livedit/e55abfa37af26e19/8ce9971c2177b3dd.m3u8",
+      "sources": [
+        {
+          "url": "https://st-video.xjmty.com/fs/livedit/e55abfa37af26e19/8ce9971c2177b3dd.m3u8",
+          "width": 1920,
+          "height": 1080
+        }
+      ],
+      "height": 1080
+    },
+    {
+      "id": "8d9a2fd0c0ce",
+      "name": "新疆维语新闻综合",
+      "group": "地方频道",
+      "url": "https://hls.quklive.com/live/play-sh-21.quklive.com/1777511615189085.m3u8?auth_key=2092871636-a39d8614688744d0b170b856b086ba80-0-33900446b83fa0b5befeb6bedbcd51a0",
+      "sources": [
+        {
+          "url": "https://hls.quklive.com/live/play-sh-21.quklive.com/1777511615189085.m3u8?auth_key=2092871636-a39d8614688744d0b170b856b086ba80-0-33900446b83fa0b5befeb6bedbcd51a0",
+          "width": 1024,
+          "height": 576
+        }
+      ],
+      "height": 576
+    },
+    {
+      "id": "0d075036ab01",
+      "name": "江宁新闻综合",
+      "group": "地方频道",
+      "url": "https://jiangning-tv-playing-t.cm.jstv.com/jiangning-tv/jnxwzh.m3u8",
+      "sources": [
+        {
+          "url": "https://jiangning-tv-playing-t.cm.jstv.com/jiangning-tv/jnxwzh.m3u8",
+          "width": 720,
+          "height": 480
+        }
+      ],
+      "height": 480
+    },
+    {
+      "id": "257069a55a66",
+      "name": "浙江国际",
+      "group": "地方频道",
+      "url": "https://ali-m-l.cztv.com/channels/lantian/channel10/1080p.m3u8",
+      "sources": [
+        {
+          "url": "https://ali-m-l.cztv.com/channels/lantian/channel10/1080p.m3u8",
+          "width": 1920,
+          "height": 1080
+        }
+      ],
+      "height": 1080
+    },
+    {
+      "id": "4173ddc9f027",
+      "name": "浙江教科",
+      "group": "地方频道",
+      "url": "https://ali-m-l.cztv.com/channels/lantian/channel004/1080p.m3u8",
+      "sources": [
+        {
+          "url": "https://ali-m-l.cztv.com/channels/lantian/channel004/1080p.m3u8",
+          "width": 1920,
+          "height": 1080
+        }
+      ],
+      "height": 1080
+    },
+    {
+      "id": "363b7d6b752a",
+      "name": "浙江新闻",
+      "group": "地方频道",
+      "url": "https://ali-m-l.cztv.com/channels/lantian/channel007/1080p.m3u8",
+      "sources": [
+        {
+          "url": "https://ali-m-l.cztv.com/channels/lantian/channel007/1080p.m3u8",
+          "width": 1920,
+          "height": 1080
+        }
+      ],
+      "height": 1080
+    },
+    {
+      "id": "7ed61953d381",
+      "name": "浙江民生",
+      "group": "地方频道",
+      "url": "https://ali-m-l.cztv.com/channels/lantian/channel006/1080p.m3u8",
+      "sources": [
+        {
+          "url": "https://ali-m-l.cztv.com/channels/lantian/channel006/1080p.m3u8",
+          "width": 1920,
+          "height": 1080
+        }
+      ],
+      "height": 1080
+    },
+    {
+      "id": "2e95640dea14",
+      "name": "浙江经济",
+      "group": "地方频道",
+      "url": "https://ali-m-l.cztv.com/channels/lantian/channel003/1080p.m3u8",
+      "sources": [
+        {
+          "url": "https://ali-m-l.cztv.com/channels/lantian/channel003/1080p.m3u8",
+          "width": 1920,
+          "height": 1080
+        }
+      ],
+      "height": 1080
+    },
+    {
+      "id": "95fe30c11eb3",
+      "name": "浙江钱江",
+      "group": "地方频道",
+      "url": "https://ali-m-l.cztv.com/channels/lantian/channel002/1080p.m3u8",
+      "sources": [
+        {
+          "url": "https://ali-m-l.cztv.com/channels/lantian/channel002/1080p.m3u8",
+          "width": 1920,
+          "height": 1080
+        }
+      ],
+      "height": 1080
+    },
+    {
+      "id": "13882140a624",
+      "name": "熊猫直播",
+      "group": "地方频道",
+      "url": "https://gcwbndali.v.myalicdn.com/gcwbnd/ipanda1000_2/index.m3u8",
+      "sources": [
+        {
+          "url": "https://gcwbndali.v.myalicdn.com/gcwbnd/ipanda1000_2/index.m3u8",
+          "width": 640,
+          "height": 360
+        }
+      ],
+      "height": 360
+    },
+    {
+      "id": "7ef7d7b1b5ce",
+      "name": "福州生活",
+      "group": "地方频道",
+      "url": "http://live.zohi.tv/video/s10001-fztv-3/index.m3u8",
+      "sources": [
+        {
+          "url": "http://live.zohi.tv/video/s10001-fztv-3/index.m3u8",
+          "width": 1920,
+          "height": 1080
+        }
+      ],
+      "height": 1080
+    },
+    {
+      "id": "44d46243faec",
+      "name": "赤峰新闻综合",
+      "group": "地方频道",
+      "url": "http://play1-qk.nmtv.cn/live/1735546697341033.m3u8",
+      "sources": [
+        {
+          "url": "http://play1-qk.nmtv.cn/live/1735546697341033.m3u8",
+          "width": 1920,
+          "height": 1080
+        }
+      ],
+      "height": 1080
+    },
+    {
+      "id": "70251e19c60d",
+      "name": "通化新闻综合",
+      "group": "地方频道",
+      "url": "http://lsfb.avap.jilintv.cn/zqvk7vpj/channel/43ea5771aa44421591f9dfd2b71f1b9b/index.m3u8",
+      "sources": [
+        {
+          "url": "http://lsfb.avap.jilintv.cn/zqvk7vpj/channel/43ea5771aa44421591f9dfd2b71f1b9b/index.m3u8",
+          "width": 1920,
+          "height": 1080
+        }
+      ],
+      "height": 1080
+    },
+    {
+      "id": "58d6481e41a1",
+      "name": "韶关综合",
+      "group": "地方频道",
+      "url": "https://www.sgmsw.cn/videos/tv/201805/1308/SB05RIYZOU8JR418AUQOF62CAJQ08D0E/hls/live.m3u8",
+      "sources": [
+        {
+          "url": "https://www.sgmsw.cn/videos/tv/201805/1308/SB05RIYZOU8JR418AUQOF62CAJQ08D0E/hls/live.m3u8",
+          "width": 1920,
+          "height": 1080
+        }
+      ],
+      "height": 1080
+    },
+    {
+      "id": "1ef1a9402f5b",
+      "name": "CCTV+ 新闻现场",
+      "group": "新闻纪录",
+      "url": "https://cd-live-stream.news.cctvplus.com/live/smil:CHANNEL1.smil/playlist.m3u8",
+      "sources": [
+        {
+          "url": "https://cd-live-stream.news.cctvplus.com/live/smil:CHANNEL1.smil/playlist.m3u8",
+          "width": 426,
+          "height": 240
+        }
+      ],
+      "height": 240
+    },
+    {
+      "id": "f3a1a15f4f3d",
+      "name": "CGTN 环球财经",
+      "group": "新闻纪录",
+      "url": "https://fastlive.cctvplus.com/out/v1/2b3d8a0c805d437f9dc85b764c2ac599/index.m3u8",
+      "sources": [
+        {
+          "url": "https://fastlive.cctvplus.com/out/v1/2b3d8a0c805d437f9dc85b764c2ac599/index.m3u8",
+          "width": 1920,
+          "height": 1080
+        }
+      ],
+      "height": 1080
+    },
+    {
+      "id": "4b231e2bfb86",
+      "name": "CGTN 纪录",
+      "group": "新闻纪录",
+      "url": "https://amg00405-rakutentv-cgtndocumentary-rakuten-0ql8j.amagi.tv/master.m3u8",
+      "sources": [
+        {
+          "url": "https://amg00405-rakutentv-cgtndocumentary-rakuten-0ql8j.amagi.tv/master.m3u8",
+          "width": 1920,
+          "height": 1080
+        }
+      ],
+      "height": 1080
+    },
+    {
+      "id": "fb854ea86546",
+      "name": "CGTN 英语新闻",
+      "group": "新闻纪录",
+      "url": "https://english-livebkali.cgtn.com/live/encgtn.m3u8",
+      "sources": [
+        {
+          "url": "https://english-livebkali.cgtn.com/live/encgtn.m3u8",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "url": "https://amg00405-rakutentv-cgtn-rakuten-i9tar.amagi.tv/master.m3u8",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "url": "https://0472.org/hls/cgtn.m3u8",
+          "width": 1280,
+          "height": 720
+        }
+      ],
+      "height": 1080
+    },
+    {
+      "id": "dabb1b12c971",
+      "name": "中国旅游 · 纪录",
+      "group": "新闻纪录",
+      "url": "https://fastlive.cctvplus.com/out/v1/ca6f9297b7314a63959435028af287fc/index.m3u8",
+      "sources": [
+        {
+          "url": "https://fastlive.cctvplus.com/out/v1/ca6f9297b7314a63959435028af287fc/index.m3u8",
+          "width": 640,
+          "height": 360
+        }
+      ],
+      "height": 360
+    },
+    {
+      "id": "a0362fa04a27",
+      "name": "之江纪录",
+      "group": "新闻纪录",
+      "url": "https://ali-m-l.cztv.com/channels/lantian/channel012/1080p.m3u8",
+      "sources": [
+        {
+          "url": "https://ali-m-l.cztv.com/channels/lantian/channel012/1080p.m3u8",
+          "width": 1920,
+          "height": 1080
+        }
+      ],
+      "height": 1080
+    },
+    {
+      "id": "96617ed3df1d",
+      "name": "发现中国 · 纪录",
+      "group": "新闻纪录",
+      "url": "https://fastlive.cctvplus.com/out/v1/8442c3bfd4c64a3984389328f6087879/index.m3u8",
+      "sources": [
+        {
+          "url": "https://fastlive.cctvplus.com/out/v1/8442c3bfd4c64a3984389328f6087879/index.m3u8",
+          "width": 640,
+          "height": 360
+        }
+      ],
+      "height": 360
+    }
+  ],
+  "sources": [
+    "https://github.com/iptv-org/iptv",
+    "https://github.com/vbskycn/iptv",
+    "https://github.com/jiandantv/IPTV2026"
+  ],
+  "backupSummary": {
+    "channels": 67,
+    "withBackup": 13,
+    "additionalRoutes": 16,
+    "fullHDChannels": 40,
+    "cctvWithBackup": 12
+  }
+}
