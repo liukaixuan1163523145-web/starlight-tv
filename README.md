@@ -2,7 +2,7 @@
 
 为遥控器和客厅大屏设计的 Android TV 影音播放器。基于 [LibreSpark/LibreTV](https://github.com/LibreSpark/LibreTV) 的 Next.js 版本改造，服务端随 APK 在电视本机运行。
 
-**[下载最新 APK](https://github.com/liukaixuan1163523145-web/starlight-tv/releases/latest)** · [安装与操作](docs/USAGE.md) · [从源码构建](docs/BUILD.md) · [上游与许可证](THIRD_PARTY_NOTICES.md)
+**[下载最新 APK](https://github.com/liukaixuan1163523145-web/starlight-tv/releases/latest)** · [安装与操作](docs/USAGE.md) · [从源码构建](docs/BUILD.md) · [上游与许可证](THIRD_PARTY_NOTICES.md) · [赞助支持](#支持项目)
 
 ![星幕 TV](android/res/drawable/tv_banner.png)
 
@@ -35,3 +35,11 @@
 影视和直播接口由外部站点提供，可能变动或失效。自动测速是短片段采样，不是带宽保证；备用源不能保证永久可用。本项目不存储影片、不提供付费授权或绕过播放限制。请配置你有权访问的来源。
 
 根目录许可证沿用 **AGPL-3.0-or-later**。这是独立改造项目，不是 LibreTV 官方发行版。完整 Web/服务端代码位于 `app/`，Android 外壳位于 `android/`，TV UI 模块和生成脚本一并提供。
+
+## 支持项目
+
+如果星幕 TV 对你有帮助，欢迎自愿赞助，支持电视兼容性改进、问题修复和文档维护。
+
+**[通过 Wise 赞助星幕 TV](https://wise.com/pay/me/liukaixuanl)**
+
+赞助不会解锁额外影片、播放源或会员权限，也不附带专属售后或永久更新承诺。项目继续按 AGPL-3.0-or-later 提供源码，是否赞助不影响现有功能的使用。
