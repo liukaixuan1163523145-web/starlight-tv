@@ -1,0 +1,20 @@
+{
+  "sources": [
+    {
+      "name": "如意资源",
+      "url": "https://cj.rycjapi.com/api.php/provide/vod",
+      "isAdult": false,
+      "verifiedAt": "2026-10-18T08:58:03.509914+00:00",
+      "provenance": "https://gist.github.com/yifanwang-yet/dbb7af044d90b5f51c1f32d0e0a200f6",
+      "validation": "matched search plus two media segment transfers; no ad-free guarantee"
+    },
+    {
+      "name": "iKun资源",
+      "url": "https://ikunzyapi.com/api.php/provide/vod",
+      "isAdult": false,
+      "verifiedAt": "2026-10-18T08:59:29.922962+00:00",
+      "provenance": "https://github.com/samqin123/MoonTV/blob/main/config.json",
+      "validation": "matched search plus two media segment transfers; no ad-free guarantee"
+    }
+  ]
+}

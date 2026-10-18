@@ -1,0 +1,13 @@
+const fs=require('fs'),vm=require('vm'),assert=require('assert'),path=require('path');
+const nodes={},observers=[],nativeCalls=[],data={};let levels=[],selected=-1,ad=false;
+function node(id){return nodes[id]||(nodes[id]={id,hidden:true,value:'',textContent:'',disabled:false,children:[],classList:{contains:()=>false},appendChild(x){this.children.push(x)},addEventListener(){}});}
+const video=node('video');video.volume=.8;video.videoWidth=1920;video.videoHeight=1080;
+const scope={document:{getElementById:node,createElement:()=>({})},localStorage:{getItem:k=>data[k],setItem:(k,v)=>data[k]=v},window:{StarlightAndroid:{brightness:v=>nativeCalls.push(['brightness',v]),mediaVolume:()=>60,setMediaVolume:v=>nativeCalls.push(['volume',v])},StarlightMobile:{qualityLevels:()=>levels,qualityLevel:()=>selected,chooseQuality:i=>(selected=i,true),reportAd:()=>ad=!ad,adReported:()=>ad}},MutationObserver:class{constructor(fn){this.fn=fn}observe(n){observers.push([n.id,this.fn])}},setInterval:()=>1,clearInterval(){},Math,Number,String,JSON};
+vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../mobile/player-settings.js'),'utf8'),scope);
+assert(node('mobile-quality').disabled);assert(node('mobile-quality-info').textContent.includes('1920 × 1080'));
+node('player').hidden=false;node('mobile-brightness').value='35';node('mobile-brightness').oninput();assert.deepEqual(nativeCalls.at(-1),['brightness',35]);assert.equal(data['mobile-brightness'],'35');
+node('player').hidden=true;observers.find(x=>x[0]==='player')[1]();assert.deepEqual(nativeCalls.at(-1),['brightness',-1],'Restore window auto brightness after exit');
+node('mobile-volume').value='40';node('mobile-volume').oninput();assert.deepEqual(nativeCalls.at(-1),['volume',40]);
+levels=[{index:0,height:720,bitrate:2e6},{index:1,height:1080,bitrate:4e6}];node('mobile-panel').hidden=false;observers.find(x=>x[0]==='mobile-panel')[1]();assert(!node('mobile-quality').disabled);assert(node('mobile-quality').children.some(x=>x.textContent==='1080p · 4.0 Mbps'));node('mobile-quality').value='1';node('mobile-quality').onchange();assert.equal(selected,1);
+node('mobile-report-ad').onclick();assert(ad);assert(node('mobile-report-ad').textContent.includes('取消'));
+const report={passed:true,checks:['native window brightness bridge','brightness restored after player closes','native media volume bridge','single-rendition quality disabled','actual multirendition options and switching','decoded dimensions','local ad feedback']};fs.writeFileSync(require('./test-report.cjs')('beta7-player-settings-tests.json'),JSON.stringify(report,null,2));console.log(JSON.stringify(report));

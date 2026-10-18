@@ -18,3 +18,7 @@
 # 本地推荐数据说明
 
 本地数据版附带从豆瓣与 MDBList 返回的公开片单、评分、来源时间和既有海报快照。烂番茄评分通过 MDBList 整理，保留可用的原站评分链接。代码许可证不改变第三方海报、数据及品牌标识的权利归属。数据文件和校验值随 Release 提供，来源不代表合作或官方背书。
+
+## 手机版本地文字识别
+
+实验性广告识别使用 Tesseract.js 6.0.1、tesseract.js-core 6.1.2（Apache-2.0）与 Tesseract 简体中文/英文 LSTM 模型。上游：https://github.com/naptha/tesseract.js 、https://github.com/naptha/tesseract.js-core 、https://github.com/naptha/tessdata 。许可文本随 `app/public/mobile/ocr/` 附带，版本、下载来源与文件校验见 `mobile/ocr-provenance.json`。画面识别在本机 Web Worker 内进行，不上传视频或截图。

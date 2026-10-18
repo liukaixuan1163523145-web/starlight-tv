@@ -20,6 +20,8 @@ export interface SearchResultItem {
   year?: string;
   area?: string;
   remarks?: string;
+  /** Source-supplied audio language, not independently verified. */
+  language?: string;
   /** 自定义源的 API 地址，详情请求需要 */
   sourceUrl?: string;
   isAdult?: boolean;
@@ -35,6 +37,8 @@ export interface VideoInfo {
   director?: string;
   actor?: string;
   remarks?: string;
+  /** Source-supplied audio language, not independently verified. */
+  language?: string;
   sourceKey: string;
   sourceName: string;
   sourceUrl?: string;

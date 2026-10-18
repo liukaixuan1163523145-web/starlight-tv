@@ -6,6 +6,7 @@ node_modules/
 !.env.example
 .tools/
 .build/
+.build-mobile/
 dist/
 *.apk
 *.keystore

@@ -18,7 +18,7 @@ describe('parseSearchList', () => {
   it('解析标准搜索响应并补齐源信息', () => {
     const data = {
       list: [
-        { vod_id: 123, vod_name: '流浪地球', vod_pic: 'https://img/a.jpg', type_name: '科幻', vod_year: '2019', vod_remarks: 'HD' },
+        { vod_id: 123, vod_name: '流浪地球', vod_pic: 'https://img/a.jpg', type_name: '科幻', vod_year: '2019', vod_remarks: 'HD', vod_lang: '英语' },
         { vod_id: 'abc-1', vod_name: '探<script>' },
       ],
     };
@@ -26,7 +26,7 @@ describe('parseSearchList', () => {
     expect(items).toHaveLength(2);
     expect(items[0]).toMatchObject({
       sourceKey: 'test', sourceName: '测试源', vodId: '123', name: '流浪地球',
-      typeName: '科幻', year: '2019', remarks: 'HD', sourceUrl: source.url,
+      typeName: '科幻', year: '2019', remarks: 'HD', language: '英语', sourceUrl: source.url,
     });
     expect(items[1].vodId).toBe('abc-1');
   });

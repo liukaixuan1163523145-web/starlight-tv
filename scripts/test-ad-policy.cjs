@@ -1,0 +1,13 @@
+const assert=require('node:assert/strict');const policy=require('../mobile/ad-policy.js');
+const sample='本 片 由 89495.com 赞助 发 布 主 营 : 棋牌 体育 真人 娱乐 电子 捕 鱼';
+assert.equal(policy.classify(sample,71,.95).fullScreen,true);
+assert.equal(policy.classify(sample,71,.2).suspected,true);
+assert.equal(policy.classify(sample,71,.2).fullScreen,false);
+for(const text of ['请远离赌博，珍惜家庭','今天我们去棋牌游戏室','example.com 赞助正常纪录片','棋牌 博彩 赌场','历史故事：赌博、赌场、真人娱乐'])assert.equal(policy.classify(text,90,.95).suspected,false,text);
+assert.equal(policy.classify(sample,20,.95).suspected,false);
+const colored='酒量 89495.com 现胡及布 TEHUE 体育 真人娱乐 电子捕鱼';
+assert.equal(policy.classify(colored,63,.3).suspected,true,'Partly misread promotional banner');
+assert.equal(policy.classify(colored,63,.95).fullScreen,false,'Partial banner cannot trigger automatic seek');
+assert.equal(policy.classify(colored,40,.95).suspected,false);
+assert.equal(policy.classify('新闻 example.com 呼吁远离赌博赌场',90,.9).suspected,false);
+console.log('Ad policy: 13 positive/negative assertions passed');

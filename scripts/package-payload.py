@@ -2,11 +2,17 @@
 from pathlib import Path
 import json,re,zipfile,shutil,argparse,hashlib
 root=Path(__file__).resolve().parent.parent
-app=root/'app';runtime=root/'.tools/runtime';assets=root/'.build/assets'
-assets.mkdir(parents=True,exist_ok=True)
+app=root/'app'
 parser=argparse.ArgumentParser()
 parser.add_argument('--local-data',type=Path,required=True,help='Verified public recommendation snapshot ZIP')
+parser.add_argument('--flavor',choices=['tv','mobile'],default='tv')
 args=parser.parse_args()
+mobile=args.flavor=='mobile'
+runtime=root/('.tools/runtime-arm64' if mobile else '.tools/runtime')
+assets=root/('.build-mobile/assets' if mobile else '.build/assets')
+assets.mkdir(parents=True,exist_ok=True)
+provenance=root/('runtime-provenance-arm64.json' if mobile else 'runtime-provenance.json')
+if mobile and not (app/'public/mobile/app.js').is_file():raise SystemExit('Run scripts/assemble-mobile.py first')
 manifest=json.loads((root/'local-data-manifest.json').read_text('utf8'))
 if hashlib.sha256(args.local_data.read_bytes()).hexdigest()!=manifest['sha256']:raise ValueError('Local dataset checksum mismatch')
 shutil.copy2(args.local_data,assets/'local-data.zip')
@@ -28,6 +34,7 @@ def add_dir(z,base,prefix):
         if p.suffix in {'.dll','.node','.exe','.log','.tsbuildinfo'}: continue
         z.write(p,prefix+'/'+rel.as_posix())
 if not (app/'.next/standalone/server.js').is_file():raise SystemExit('Run DOCKER_BUILD=1 npm run build in app first')
+if not (app/'.next/standalone/node_modules/next/package.json').is_file():raise SystemExit('Standalone Next dependencies are missing; resolve Windows trace/symlink errors before packaging')
 with zipfile.ZipFile(assets/'payload.zip','w',zipfile.ZIP_DEFLATED,compresslevel=6) as z:
     add_dir(z,app/'.next/standalone','app')
     add_dir(z,app/'.next/static','app/.next/static')
@@ -35,7 +42,7 @@ with zipfile.ZipFile(assets/'payload.zip','w',zipfile.ZIP_DEFLATED,compresslevel
     add_dir(z,root/'licenses','licenses')
     for rel in sorted(needed):z.write(runtime/rel,'runtime/'+rel)
     z.write(root/'android/start.cjs','start.cjs')
-    z.write(root/'runtime-provenance.json','runtime-provenance.json')
+    z.write(provenance,'runtime-provenance.json')
     z.write(root/'THIRD_PARTY_NOTICES.md','THIRD_PARTY_NOTICES.md')
     z.writestr('edition.json',json.dumps({'localOnly':True,'snapshot':manifest['snapshot']}))
-print('Created .build/assets/payload.zip, %.2f MiB'%((assets/'payload.zip').stat().st_size/1048576))
+print('Created '+str(assets/'payload.zip')+', %.2f MiB'%((assets/'payload.zip').stat().st_size/1048576))

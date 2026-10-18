@@ -1,0 +1,28 @@
+/* Claude UI design, 2026-10-18. See design/claude-prototype.html. */
+:root{
+  color-scheme:dark;
+  /* 颜色 */
+  --bg:#0C0D11;        /* 幕布：页面底色 */
+  --s1:#15161C;        /* 一级面：底栏、面板 */
+  --s2:#1D1F26;        /* 二级面：芯片、行、卡片 */
+  --s3:#292B33;        /* 三级面：按下、频道台标块 */
+  --line:rgba(240,232,214,.09);
+  --t1:#F2EEE5;        /* 银幕白：标题、正文 */
+  --t2:#B7B1A6;        /* 次要文字 */
+  --t3:#857E73;        /* 说明、元信息 */
+  --amber:#F2B457;     /* 放映灯：主操作/当前态/进度 */
+  --amber-ink:#24190A; /* 琥珀上的文字 */
+  --amber-soft:rgba(242,180,87,.14);
+  --live:#FF5A4E;      /* 直播红点（语义色，不作强调色） */
+  --ok:#62D29B;        /* 测速最快、来源正常 */
+  --warn:#FF9B5E;      /* 缓存陈旧、部分失败 */
+  --bad:#FF6B6B;       /* 超时、断流 */
+  /* 字体：WebView 直接用系统中文字体，不加载网络字体 */
+  --f-ui:"MiSans","HarmonyOS Sans SC","PingFang SC","Noto Sans SC","Noto Sans CJK SC","Microsoft YaHei",system-ui,sans-serif;
+  --fs-cap:12px; --fs-sm:13px; --fs-body:14px; --fs-md:16px; --fs-lg:20px; --fs-xl:26px;
+  /* 间距 4 基数 */
+  --sp1:4px; --sp2:8px; --sp3:12px; --sp4:16px; --sp5:20px; --sp6:24px; --sp8:32px;
+  /* 圆角 */
+  --r-badge:6px; --r-poster:10px; --r-ctl:14px; --r-panel:22px; --r-pill:999px;
+  --tap:44px; --dock-h:64px;
+}

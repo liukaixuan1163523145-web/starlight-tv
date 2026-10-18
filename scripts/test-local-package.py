@@ -2,7 +2,7 @@
 from pathlib import Path
 import argparse,base64,hashlib,io,json,os,secrets,subprocess,time,urllib.request,urllib.error,urllib.parse,zipfile
 
-parser=argparse.ArgumentParser();parser.add_argument('--apk',type=Path,required=True);parser.add_argument('--report',type=Path,required=True);args=parser.parse_args()
+parser=argparse.ArgumentParser();parser.add_argument('--apk',type=Path,required=True);parser.add_argument('--report',type=Path,required=True);parser.add_argument('--flavor',choices=['tv','mobile'],default='tv');args=parser.parse_args()
 root=Path(__file__).resolve().parents[1]
 stage=root/'.build'/('local-smoke-'+str(int(time.time())))
 stage.mkdir(parents=True)
@@ -27,7 +27,7 @@ password=secrets.token_urlsafe(32)
 audit=stage/'outbound-attempts.txt'
 blocker=stage/'block-outbound.cjs'
 blocker.write_text("const fs=require('fs');global.fetch=function(){fs.appendFileSync(process.env.OUTBOUND_AUDIT,'blocked\\n');return Promise.reject(new Error('Outbound fetch blocked for local-data test'));};",encoding='utf8')
-env={**os.environ,'TV_DATA_DIR':str(stage.resolve()),'OUTBOUND_AUDIT':str(audit.resolve())}
+env={**os.environ,'TV_DATA_DIR':str(stage.resolve()),'OUTBOUND_AUDIT':str(audit.resolve()),'STARLIGHT_PORT':'18082'}
 env.pop('MDBLIST_API_KEY',None)
 # Use the APK's real start script (including edition and configuration handling).
 # Its loopback port is fixed at 8080, so this test uses an isolated port via a copy.
@@ -75,8 +75,10 @@ with (stage/'server.log').open('w',encoding='utf8') as log:
         try:urllib.request.urlopen(base+'/api/mdblist?type=movie');raise AssertionError('Authentication missing')
         except urllib.error.HTTPError as e:assert e.code==401
         assert not audit.exists(), 'A recommendation route attempted an outbound request'
-        page=urllib.request.urlopen(base+'/tv/tv.html').read().decode();assert 'starlight-local-112' in page
+        page=urllib.request.urlopen(base+('/mobile/index.html' if args.flavor=='mobile' else '/tv/tv.html')).read().decode()
+        assert ('/mobile/app.js' if args.flavor=='mobile' else 'starlight-local-112') in page
         report={'version':'1.1.2-local','apkSha256':hashlib.sha256(args.apk.read_bytes()).hexdigest(),'apkBytes':args.apk.stat().st_size,'snapshot':manifest['snapshot'],'checks':{'freshInstallNoApiKey':True,'realPackagedStartScript':True,'outboundRecommendationRequests':0,'mdbBothKinds':True,'doubanTenCategoriesAndPagination':True,'localPosterHits':posters,'missingPosterNoNetwork':True,'backgroundWarmDisabled':True,'cacheAuthProtected':True,'snapshotChecksumMatches':True,'noCredentialsInDefaults':True},'samples':samples,'physicalTvRevalidation':False}
+        if args.flavor=='mobile':report.update(version=__import__('xml.etree.ElementTree',fromlist=['parse']).parse(root/'mobile/android/AndroidManifest.xml').getroot().get('{http://schemas.android.com/apk/res/android}versionName'),physicalPhoneValidation=False,sharedServerVersion='1.1.2')
         args.report.parent.mkdir(parents=True,exist_ok=True);args.report.write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf8')
         print(json.dumps({'passed':True,'samples':samples,'apkMiB':round(report['apkBytes']/1048576,2)}))
     finally:process.terminate();process.wait(timeout=10)

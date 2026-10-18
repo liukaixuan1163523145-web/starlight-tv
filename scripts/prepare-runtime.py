@@ -1,12 +1,16 @@
 """Download hash-pinned Termux packages; extract data only, never run scripts."""
 from pathlib import Path
-import hashlib, io, json, tarfile, urllib.request
+import hashlib, io, json, tarfile, urllib.request, argparse
 
 root=Path(__file__).resolve().parent.parent
-dest=root/'.tools/runtime';cache=root/'.tools/debs'
+parser=argparse.ArgumentParser()
+parser.add_argument('--arch',choices=['arm','arm64'],default='arm')
+args=parser.parse_args()
+manifest=root/('runtime-provenance-arm64.json' if args.arch=='arm64' else 'runtime-provenance.json')
+dest=root/('.tools/runtime-arm64' if args.arch=='arm64' else '.tools/runtime');cache=root/'.tools/debs'
 dest.mkdir(parents=True,exist_ok=True);cache.mkdir(parents=True,exist_ok=True)
 aliases=[]
-for pkg in json.loads((root/'runtime-provenance.json').read_text('utf8')):
+for pkg in json.loads(manifest.read_text('utf8')):
     archive=cache/Path(pkg['url']).name
     if not archive.exists():
         with urllib.request.urlopen(pkg['url'],timeout=60) as response: archive.write_bytes(response.read())
@@ -31,4 +35,4 @@ for pkg in json.loads((root/'runtime-provenance.json').read_text('utf8')):
 for rel,target in aliases:
     alias=dest/rel;source=(alias.parent/target).resolve()
     if source.is_relative_to(dest.resolve()) and source.is_file() and not alias.exists(): alias.write_bytes(source.read_bytes())
-print('Runtime ready in .tools/runtime')
+print('Runtime ready in '+str(dest))

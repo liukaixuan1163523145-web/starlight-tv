@@ -10,7 +10,7 @@ for (const key of ['PASSWORD','DEFAULT_SOURCES','MDBLIST_API_KEY','SEARCH_MAX_PA
 }
 if (edition.localOnly) delete process.env.MDBLIST_API_KEY;
 Object.assign(process.env, {
-  HOSTNAME:'127.0.0.1', PORT:'8080', NODE_ENV:'production', NEXT_TELEMETRY_DISABLED:'1',
+  HOSTNAME:'127.0.0.1', PORT:process.env.STARLIGHT_PORT || '8080', NODE_ENV:'production', NEXT_TELEMETRY_DISABLED:'1',
   MDBLIST_CACHE_DIR:path.join(data,'data/mdblist-cache'),
   RECOMMEND_CACHE_DIR:path.join(data,'data/recommendation-cache')
 });

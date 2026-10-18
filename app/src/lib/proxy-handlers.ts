@@ -3,6 +3,7 @@ import { guardRequest, jsonError } from '@/lib/api-guard';
 import { checkLiveUrlAllowed, isBlockedByDNS, isValidProxyUrl } from '@/lib/ssrf';
 import { fetchWithSafeRedirects } from '@/lib/fetch-utils';
 import { rewriteM3u8, LIVE_STREAM_BASE } from '@/lib/m3u8';
+import { filterExplicitVodAds } from '@/lib/vod-ad-filter';
 
 /**
  * 代理目标地址的两种传入形式：
@@ -121,12 +122,15 @@ export async function handleProxyRequest(req: Request, targetUrl: string): Promi
   // m3u8 文本：重写为代理地址（以重定向后的最终 URL 为 base 解析相对地址）
   if (isM3u8) {
     const text = await response.text();
-    return new NextResponse(rewriteM3u8(text, finalUrl), {
+    const filterAds = !guarded && new URL(req.url).searchParams.get('adFilter') === '1';
+    const filtered = filterAds ? filterExplicitVodAds(text, finalUrl) : text;
+    return new NextResponse(rewriteM3u8(filtered, finalUrl, 0, filterAds ? '/api/proxy?adFilter=1&url=' : undefined), {
       status: response.status,
       headers: {
         'Content-Type': 'application/vnd.apple.mpegurl',
         'Cache-Control': 'no-store',
         'Access-Control-Allow-Origin': '*',
+        'X-Starlight-Ad-Filter': filtered === text ? 'unchanged' : 'explicit-groups-removed',
       },
     });
   }

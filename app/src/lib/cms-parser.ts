@@ -40,6 +40,7 @@ export function parseSearchList(
       year: typeof vod.vod_year === 'string' ? vod.vod_year : undefined,
       area: typeof vod.vod_area === 'string' ? vod.vod_area : undefined,
       remarks: typeof vod.vod_remarks === 'string' ? vod.vod_remarks : undefined,
+      language: typeof vod.vod_lang === 'string' ? vod.vod_lang : undefined,
       sourceUrl: source.url,
       isAdult: source.isAdult,
     };
@@ -102,6 +103,7 @@ export function parseDetail(
       director: str(vod.vod_director),
       actor: str(vod.vod_actor),
       remarks: str(vod.vod_remarks),
+      language: str(vod.vod_lang),
       sourceKey: source.key,
       sourceName: source.name,
       sourceUrl: source.url,

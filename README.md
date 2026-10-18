@@ -1,12 +1,29 @@
 # 星幕 TV · Starlight TV
 
-为遥控器和客厅大屏设计的 Android TV 影音播放器。基于 [LibreSpark/LibreTV](https://github.com/LibreSpark/LibreTV) 的 Next.js 版本改造，服务端随 APK 在电视本机运行。
+提供适配遥控器大屏的星幕 TV，以及适配触摸操作的星幕手机版。基于 [LibreSpark/LibreTV](https://github.com/LibreSpark/LibreTV) 的 Next.js 版本改造，服务端随 APK 在 Android 设备本机运行，无需电脑常开。
 
-**[下载最新 APK](https://github.com/liukaixuan1163523145-web/starlight-tv/releases/latest)** · [安装与操作](docs/USAGE.md) · [从源码构建](docs/BUILD.md) · [上游与许可证](THIRD_PARTY_NOTICES.md) · [赞助支持](#支持项目)
+**[下载手机版 beta13](https://github.com/liukaixuan1163523145-web/starlight-tv/releases/tag/v1.2.0-mobile-beta13)** · **[下载 TV 版](https://github.com/liukaixuan1163523145-web/starlight-tv/releases/tag/v1.1.2-local)** · [手机操作与构建](docs/MOBILE.md) · [安装与操作](docs/USAGE.md) · [从源码构建](docs/BUILD.md) · [上游与许可证](THIRD_PARTY_NOTICES.md) · [赞助支持](#支持项目)
 
 ![星幕 TV](android/res/drawable/tv_banner.png)
 
-## 功能
+## 选择安装包
+
+| 设备 | 版本 | 安装包与状态 |
+| --- | --- | --- |
+| Android 手机 | [1.2.0-mobile-beta13](https://github.com/liukaixuan1163523145-web/starlight-tv/releases/tag/v1.2.0-mobile-beta13) | ARM64 测试版；已在小米 17 Pro Max / Android 16 安装、启动，具体验证边界见发布说明 |
+| Android TV | [1.1.2-local](https://github.com/liukaixuan1163523145-web/starlight-tv/releases/tag/v1.1.2-local) | ARMv7 本地数据版；本次保留已有安装包，不移植手机专属功能 |
+
+两个版本均无需 API Key，普通使用者只下载对应 APK；包名不同，可以并存。已安装同版应用时直接覆盖更新，保留历史和设置。首次启动预留至少 1 GiB 空间。
+
+## 手机版新增功能
+
+- 触屏海报与分段选集、默认沉浸全屏、横竖屏选择、手势亮度/音量与短时提示条。
+- 本地推荐与评分、缺失海报按需下载后缓存、匹配同名同年同类的多个语言版本。
+- 流畅来源优先，再比较原声语言标注、已知清晰度与媒体测速；保留手动选源。
+- 明确播放失败或持续卡顿时按质量尝试备用源，保留同集进度与倍速；最多尝试 3 个备用记录，排除缺集或时长明显不匹配者。
+- 原声与分辨率标注不是片源质量保证；不同剪辑版本的进度可能偏移。自动广告识别仍属实验功能，真实遮挡效果待进一步验证。
+
+## TV 版功能
 
 - 遥控器方向键、确认、返回；专用选集、来源和播放面板。
 - 影片搜索、模糊名称匹配、来源切换、快进快退与 0.5–2 倍速。
@@ -16,7 +33,7 @@
 - 本地数据版内置推荐、评分和海报，不需要 API Key，不联网更新片单。
 - 本地缓存中心查看真实条目数量与海报占用；片单标注原始数据日期。
 
-## 当前版本
+## TV 版当前版本
 
 **1.1.2-local** 是无需 API Key 的本地数据版，安装包自带公开片单和海报快照。保留原应用 ID 与签名，可覆盖旧版本并保留配置与历史。
 
@@ -34,7 +51,7 @@
 
 影视和直播接口由外部站点提供，可能变动或失效。自动测速是短片段采样，不是带宽保证；备用源不能保证永久可用。本项目不存储影片、不提供付费授权或绕过播放限制。请配置你有权访问的来源。
 
-根目录许可证沿用 **AGPL-3.0-or-later**。这是独立改造项目，不是 LibreTV 官方发行版。完整 Web/服务端代码位于 `app/`，Android 外壳位于 `android/`，TV UI 模块和生成脚本一并提供。
+根目录许可证沿用 **AGPL-3.0-or-later**。这是独立改造项目，不是 LibreTV 官方发行版。完整 Web/服务端代码位于 `app/`，Android 外壳位于 `android/`，手机适配位于 `mobile/`。构建 TV 1.1.2-local 请检出 `v1.1.2-local` 标签；手机 beta13 使用 `v1.2.0-mobile-beta13`，避免将新共享代码误当成旧 TV APK 的源码。
 
 ## 支持项目
 

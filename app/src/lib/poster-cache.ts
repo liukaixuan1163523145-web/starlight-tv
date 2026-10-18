@@ -9,23 +9,28 @@ const touched = new Map<string, number>();
 const maxImage = 2 * 1024 * 1024, maxDisk = 512 * 1024 * 1024;
 let lastPrune = 0, writes = 0;
 const directory = () => path.join(recommendationRoot(), 'posters');
-async function prune() {
+async function prune(dir: string) {
   if (++writes < 100 && Date.now() - lastPrune < 60000) return;
   writes = 0; lastPrune = Date.now();
   try {
-    const files = await Promise.all((await fs.readdir(directory())).filter(n => /^[a-f0-9]{64}\.json$/.test(n)).map(async name => { const s = await fs.stat(path.join(directory(), name)); return { name, size: s.size, time: s.mtimeMs }; }));
+    const files = await Promise.all((await fs.readdir(dir)).filter(n => /^[a-f0-9]{64}\.json$/.test(n)).map(async name => { const s = await fs.stat(path.join(dir, name)); return { name, size: s.size, time: s.mtimeMs }; }));
     files.sort((a,b) => b.time - a.time); let bytes = 0;
-    for (let i = 0; i < files.length; i++) { bytes += files[i].size; if (bytes > maxDisk || i >= 8000) await fs.unlink(path.join(directory(), files[i].name)).catch(() => {}); }
+    for (let i = 0; i < files.length; i++) { bytes += files[i].size; if (bytes > maxDisk || i >= 8000) await fs.unlink(path.join(dir, files[i].name)).catch(() => {}); }
   } catch { /* best effort bounded cache maintenance */ }
 }
-export async function getPoster(url: string): Promise<Poster & { cached: boolean }> {
+export async function getPoster(url: string, source = false): Promise<Poster & { cached: boolean }> {
   if (url.length > 4096 || !/^https?:\/\//.test(url)) throw Error('Invalid poster URL');
-  const key = createHash('sha256').update(url).digest('hex'), file = path.join(directory(), key + '.json');
-  try { const saved = JSON.parse(await fs.readFile(file, 'utf8')); if (/^image\/(jpeg|png|webp|gif|avif)$/.test(saved.type) && typeof saved.body === 'string' && saved.body.length <= maxImage * 1.4) {
-    if (Date.now() - (touched.get(key) || 0) > 3600000) { touched.delete(key); touched.set(key, Date.now()); while(touched.size>8000)touched.delete(touched.keys().next().value!); const now=new Date();await fs.utimes(file,now,now).catch(()=>{}); }
+  const key = createHash('sha256').update(url).digest('hex');
+  const dir = source ? path.join(recommendationRoot(), 'source-posters') : directory();
+  const file = path.join(dir, key + '.json');
+  // Source artwork is stored separately so its eviction never removes bundled posters.
+  for (const cachedFile of source ? [path.join(directory(), key + '.json'), file] : [file]) {
+  try { const saved = JSON.parse(await fs.readFile(cachedFile, 'utf8')); if (/^image\/(jpeg|png|webp|gif|avif)$/.test(saved.type) && typeof saved.body === 'string' && saved.body.length <= maxImage * 1.4) {
+    if (Date.now() - (touched.get(key) || 0) > 3600000) { touched.delete(key); touched.set(key, Date.now()); while(touched.size>8000)touched.delete(touched.keys().next().value!); const now=new Date();await fs.utimes(cachedFile,now,now).catch(()=>{}); }
     return { ...saved, cached: true };
   } } catch { /* cache miss */ }
-  if (process.env.RECOMMEND_LOCAL_ONLY === '1') throw Error('Poster not included in local snapshot');
+  }
+  if (process.env.RECOMMEND_LOCAL_ONLY === '1' && !source) throw Error('Poster not included in local snapshot');
   let job = pending.get(key);
   if (!job) {
     job = (async () => {
@@ -41,7 +46,7 @@ export async function getPoster(url: string): Promise<Poster & { cached: boolean
       try { for (;;) { const part = await reader.read(); if (part.done) break; total += part.value.length; if (total > maxImage) throw Error('Poster too large'); chunks.push(part.value); } } finally { await reader.cancel().catch(() => {}); }
       if (!total) throw Error('Empty poster');
       const result = { type, body: Buffer.concat(chunks).toString('base64') };
-      try { await fs.mkdir(directory(), { recursive: true }); await fs.writeFile(file + '.tmp', JSON.stringify(result), { mode: 0o600 }); await fs.rename(file + '.tmp', file); await prune(); } catch { /* do not fail a valid image on storage errors */ }
+      try { await fs.mkdir(dir, { recursive: true }); await fs.writeFile(file + '.tmp', JSON.stringify(result), { mode: 0o600 }); await fs.rename(file + '.tmp', file); await prune(dir); } catch { /* do not fail a valid image on storage errors */ }
       return result;
     })().finally(() => { pending.delete(key); });
     pending.set(key, job);

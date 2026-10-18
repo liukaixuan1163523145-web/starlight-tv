@@ -7,7 +7,7 @@ import java.security.SecureRandom;
 import org.json.JSONObject;
 
 final class RuntimeInstaller {
-  static final String VERSION="1.1.2-local-starlight-20261018";
+  static final String VERSION="1.1.2-local-starlight-20261018"+AppConfig.RUNTIME_SUFFIX;
   static File root(Context c){return new File(c.getFilesDir(),"embedded");}
   static byte[] read(InputStream in) throws IOException {try(InputStream i=in;ByteArrayOutputStream o=new ByteArrayOutputStream()){byte[] b=new byte[65536];int n;while((n=i.read(b))!=-1)o.write(b,0,n);return o.toByteArray();}}
   static void write(File file,byte[] bytes) throws IOException {file.getParentFile().mkdirs();try(FileOutputStream o=new FileOutputStream(file)){o.write(bytes);o.getFD().sync();}}
@@ -42,9 +42,10 @@ final class RuntimeInstaller {
     write(done,VERSION.getBytes("UTF-8"));
   }
   static synchronized File prepare(Context c) throws Exception {
+    if(AppConfig.MOBILE&&!java.util.Arrays.asList(android.os.Build.SUPPORTED_ABIS).contains("arm64-v8a"))throw new IOException("此安装包需要 64 位 ARM 手机");
     File root=root(c),marker=new File(root,"version");
     if(!marker.exists()||!VERSION.equals(new String(read(new FileInputStream(marker)),"UTF-8"))){
-      ServerService.message="首次准备电视运行环境，请稍候…";
+      ServerService.message="首次准备播放运行环境，请稍候…";
       File stage=new File(c.getFilesDir(),"embedded-stage"),old=new File(c.getFilesDir(),"embedded-previous");remove(stage);
       unzip(c.getAssets().open("payload.zip"),stage);
       if(!new File(stage,"runtime/bin/node").setExecutable(true,true))throw new IOException("Runtime permission failed");
