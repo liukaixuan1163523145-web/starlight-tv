@@ -13,7 +13,7 @@ node tv-compat-build.cjs
 cd ..
 ```
 
-仓库已包含生成好的 `app/public/tv/`。修改 `tv/` 中的模块后，在构建前运行 `python scripts/assemble-tv.py`。组装入口沿用 `tv-before-live.js`，不要手工编辑生成的 `tv.js` 后再运行组装器。
+仓库已包含生成好的 `app/public/tv/`。修改 `tv/` 中的模块后，在构建前运行 `python scripts/assemble-tv.py`。组装入口沿用 `tv-before-live.js`；`scripts/tv-quality-adapter.py` 为 TV 接入 `mobile/` 下共用的版本匹配、测速、排序与换源模块，手机从同一个 `build_base()` 生成，独立保留触屏适配。不要手工编辑生成的 `tv.js` 后再运行组装器。
 
 ## ARM 运行时与 APK
 
@@ -36,7 +36,7 @@ Termux 官方镜像可能清理旧版本包。若锁定包下载不可用，请�
 
 ## 配置与 MDBList
 
-当前源码构建的是 `1.1.2-local`。数据 ZIP 独立附在同一 Release，`local-data-manifest.json` 固定其 SHA256。安装包内包含这份 ZIP；普通使用者只下载 APK 即可。片单、评分、原始数据日期和海报均为公开字段，不含个人配置。自行替换数据时用 `scripts/build-local-data.py --input <白名单缓存目录> --output <ZIP路径>` 生成新清单，再构建 APK。
+当前 TV 源码构建的是 `1.1.3-local`。数据 ZIP 沿用 `v1.1.2-local` Release，`local-data-manifest.json` 固定其 SHA256。安装包内包含这份 ZIP；普通使用者只下载 APK 即可。片单、评分、原始数据日期和海报均为公开字段，不含个人配置。自行替换数据时用 `scripts/build-local-data.py --input <白名单缓存目录> --output <ZIP路径>` 生成新清单，再构建 APK。
 
 本地版由包内 `edition.json` 固定启用 `RECOMMEND_LOCAL_ONLY=1`，并在启动时从子进程环境移除 MDBList Key；不要求用户配置密钥，也不联网刷新评分或海报。下文密钥配置仅适用于 1.1.1 联网版或开发者自己的联网部署。
 
@@ -58,3 +58,9 @@ APK 内 `assets/payload.zip` 包含 ARM Node、必需动态库、Next standalone
 - 公共播放器接口可能失效；缓存不是影片下载，也不保证持续可播放。
 - 1.1.0 的物理电视功能已验收；后续版本的构建、无外网推荐测试及包检查不等同于所有电视的兼容认证，具体实机验收状态以发布记录为准。
 - 上游依赖的安全状态应持续维护；本次改名不进行跨版本升级。请勿把电视内置服务暴露到公网。
+
+## TV 质量与续播回归
+
+`node scripts/test-tv-quality.cjs` 使用 `.build-mobile/test-media/` 下的本机 HLS 测试媒体进行桌面回归，需 Playwright 和 Chrome。`node scripts/test-tv-quality.cjs --serve` 启动仅监听本机 18087 端口的测试夹具。测试结果写入 `.build/tv-tests/`，不打入 APK。
+
+真机诊断可用 `build-apk.ps1 -Debuggable` 生成独立命名的调试 APK，原包名和签名覆盖安装。通过 ADB 将该进程的 WebView 调试 socket 转发到本机 19222，并反向转发 18087 后，执行 `node scripts/test-tv-device.cjs`；`--public` 使用电视当前配置抽查《请回答1988》并注入一次媒体错误。调试版只用于验证，发布和最终安装使用不带 `-Debuggable` 的包。正式包关闭应用及 WebView 调试，测试结束移除 ADB 转发。

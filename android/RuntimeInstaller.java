@@ -7,7 +7,7 @@ import java.security.SecureRandom;
 import org.json.JSONObject;
 
 final class RuntimeInstaller {
-  static final String VERSION="1.1.2-local-starlight-20261018"+AppConfig.RUNTIME_SUFFIX;
+  static final String VERSION="1.1.3-local-starlight-20261018-r2"+AppConfig.RUNTIME_SUFFIX;
   static File root(Context c){return new File(c.getFilesDir(),"embedded");}
   static byte[] read(InputStream in) throws IOException {try(InputStream i=in;ByteArrayOutputStream o=new ByteArrayOutputStream()){byte[] b=new byte[65536];int n;while((n=i.read(b))!=-1)o.write(b,0,n);return o.toByteArray();}}
   static void write(File file,byte[] bytes) throws IOException {file.getParentFile().mkdirs();try(FileOutputStream o=new FileOutputStream(file)){o.write(bytes);o.getFD().sync();}}

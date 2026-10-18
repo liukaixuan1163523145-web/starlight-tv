@@ -6,7 +6,8 @@ param(
   [string]$StorePasswordFile=$env:STARLIGHT_STORE_PASSWORD_FILE,
   [string]$KeyPasswordFile=$env:STARLIGHT_KEY_PASSWORD_FILE,
   [string]$BuildToolsVersion='35.0.0',
-  [ValidateSet('tv','mobile')][string]$Flavor='tv'
+  [ValidateSet('tv','mobile')][string]$Flavor='tv',
+  [switch]$Debuggable
 )
 $ErrorActionPreference='Stop'
 $root=(Resolve-Path (Join-Path $PSScriptRoot '..')).Path
@@ -30,6 +31,10 @@ CheckExit 'jar'
 CheckExit 'd8'
 $manifestPath=if($Flavor -eq 'mobile'){"$root/mobile/android/AndroidManifest.xml"}else{"$root/android/AndroidManifest.xml"}
 Copy-Item -LiteralPath $manifestPath -Destination "$build/AndroidManifest.xml"
+if($Debuggable){
+  $debugManifest=[IO.File]::ReadAllText("$build/AndroidManifest.xml").Replace('android:debuggable="false"','android:debuggable="true"')
+  [IO.File]::WriteAllText("$build/AndroidManifest.xml",$debugManifest,[Text.UTF8Encoding]::new($false))
+}
 Copy-Item -LiteralPath $androidJar -Destination "$build/android.jar"
 Copy-Item -LiteralPath "$root/android/res" -Destination $build -Recurse -Force
 if($Flavor -eq 'mobile'){Copy-Item -LiteralPath "$root/mobile/android/res/drawable/mobile_icon.xml" -Destination "$build/res/drawable/mobile_icon.xml" -Force}
@@ -43,6 +48,7 @@ try {
 [xml]$manifest=Get-Content -LiteralPath "$build/AndroidManifest.xml" -Raw -Encoding UTF8
 $version=$manifest.manifest.GetAttribute('versionName','http://schemas.android.com/apk/res/android')
 $fileName=if($Flavor -eq 'mobile'){"Starlight-$version-arm64-v8a.apk"}else{"Starlight-TV-$version-armeabi-v7a.apk"}
+if($Debuggable){$fileName=$fileName.Replace('.apk','-debug.apk')}
 $output=Join-Path $dist $fileName
 $sign=@('sign','--ks',$KeyStore,'--ks-pass',"file:$StorePasswordFile")
 if($KeyAlias){$sign+=@('--ks-key-alias',$KeyAlias)}

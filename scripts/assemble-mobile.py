@@ -3,7 +3,9 @@ from pathlib import Path
 import re, shutil, json
 
 root=Path(__file__).resolve().parent.parent
-source=(root/'tv/tv.js').read_text('utf8')
+# Build the common baseline without TV-specific adapters or side effects.
+import runpy
+source=runpy.run_path(str(root/'scripts/assemble-tv.py'))['build_base']()
 def replace(old,new):
     global source
     if source.count(old)!=1: raise ValueError('Shared UI changed; review mobile adapter: '+old[:70])

@@ -39,6 +39,7 @@ public class MainActivity extends Activity {
     else {getWindow().setStatusBarColor(0xff0c0d11);getWindow().setNavigationBarColor(0xff0c0d11);}
     int backdrop=AppConfig.MOBILE?0xff0c0d11:0xff101820;
     root=new FrameLayout(this);root.setBackgroundColor(backdrop);setContentView(root);
+    if((getApplicationInfo().flags&android.content.pm.ApplicationInfo.FLAG_DEBUGGABLE)!=0)WebView.setWebContentsDebuggingEnabled(true);
     web=new WebView(this);web.setBackgroundColor(backdrop);root.addView(web,new FrameLayout.LayoutParams(-1,-1));
     WebSettings s=web.getSettings();s.setJavaScriptEnabled(true);s.setDomStorageEnabled(true);s.setAllowFileAccess(false);s.setAllowContentAccess(false);s.setMediaPlaybackRequiresUserGesture(false);
     if(AppConfig.MOBILE)web.addJavascriptInterface(new OrientationBridge(),"StarlightAndroid");
