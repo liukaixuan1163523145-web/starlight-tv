@@ -4,7 +4,7 @@ const fs=require('fs'),path=require('path'),assert=require('assert');
 const out=path.resolve(__dirname,'../.build/tv-tests');fs.mkdirSync(out,{recursive:true});
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 (async()=>{
- const pages=await (await fetch('http://127.0.0.1:19222/json')).json(),target=pages.find(p=>p.type==='page');assert(target);
+ let target;for(let n=0;n<40&&!target;n++){const pages=await (await fetch('http://127.0.0.1:19222/json')).json();target=pages.find(p=>p.type==='page');if(!target)await sleep(500);}assert(target);
  const ws=new WebSocket(target.webSocketDebuggerUrl),pending=new Map();let serial=0;const errors=[];
  await new Promise((r,j)=>{ws.onopen=r;ws.onerror=j;});
  ws.onmessage=e=>{const m=JSON.parse(e.data);if(m.id){const p=pending.get(m.id);if(p){pending.delete(m.id);m.error?p.reject(Error(JSON.stringify(m.error))):p.resolve(m.result);}}else if(m.method==='Runtime.exceptionThrown')errors.push(m.params.exceptionDetails.text);};
@@ -15,6 +15,21 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
  const original=await evaluate('location.href');
  try{
  if(process.argv.includes('--inspect')){console.log(JSON.stringify(await evaluate(`({url:location.href,title:document.title,agent:navigator.userAgent,text:document.body&&document.body.innerText.slice(0,1600)})`)));return;}
+ if(process.argv.includes('--poster')){
+  await wait("typeof window.__tvRemote==='function'&&!!document.querySelector('#nav button')",45000);
+  await evaluate(`Array.prototype.filter.call(document.querySelectorAll('#nav button'),function(b){return b.textContent==='电影';})[0].click()`);
+  await wait("Array.prototype.some.call(document.querySelectorAll('.card'),function(b){return b.textContent.indexOf('潜伏6')>=0;})");
+  await evaluate("Array.prototype.filter.call(document.querySelectorAll('.card'),function(b){return b.textContent.indexOf('潜伏6')>=0;})[0].click()");
+  await wait("document.querySelector('h1').textContent.indexOf('搜索：')===0&&!!document.querySelector('.card')",45000);
+  await wait("document.querySelector('.card img')&&document.querySelector('.card img').naturalWidth>0",45000);
+  const search=await evaluate("({width:document.querySelector('.card img').naturalWidth,url:document.querySelector('.card img').src})");
+  await evaluate("document.querySelector('.card').click()");await wait("!!document.querySelector('.detail img')",30000);
+  await wait("document.querySelector('.detail img').naturalWidth>0",45000);
+  const detail=await evaluate("({width:document.querySelector('.detail img').naturalWidth,url:document.querySelector('.detail img').src})");
+  const cache=await evaluate("fetch(document.querySelector('.detail img').src,{credentials:'same-origin',cache:'no-store'}).then(function(r){return {status:r.status,cache:r.headers.get('X-TV-Cache')};})");
+  assert.equal(cache.status,200);assert.equal(cache.cache,'HIT');
+  const report={passed:true,title:'潜伏6',search,detail,cache,agent:await evaluate('navigator.userAgent')};fs.writeFileSync(path.join(out,'device-poster.json'),JSON.stringify(report,null,2));console.log(JSON.stringify(report));return;
+ }
  if(process.argv.includes('--public')){
   await evaluate(`Array.prototype.filter.call(document.querySelectorAll('#nav button'),function(b){return b.textContent==='搜索';})[0].click();document.querySelector('.search input').value='请回答1988';document.querySelector('.search button').click()`);
   await wait("!!document.querySelector('.card')",45000);
@@ -49,5 +64,5 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
  await evaluate("window.__tvRemote('back',false)");await wait("document.querySelector('#player').hidden");
  await sleep(400);await evaluate("window.__tvRemote('back',false)");await wait("!!document.querySelector('.card')");
  const report={passed:true,agent:await evaluate('navigator.userAgent'),before,after,errors,checks:['Chrome 66 actual TV','7 matched sources','source ranking and remote coordinates','manual source identity','real HLS decoded on TV','native error automatically selects backup','same episode and progress','1.5x restored','pause does not switch','back returns to recommendations']};assert.deepEqual(errors,[]);fs.writeFileSync(path.join(out,'device.json'),JSON.stringify(report,null,2));console.log(JSON.stringify(report));
- }finally{if(!process.argv.includes('--inspect')&&!process.argv.includes('--public'))await call('Page.navigate',{url:original});ws.close();}
+ }finally{if(!process.argv.includes('--inspect')&&!process.argv.includes('--public')&&!process.argv.includes('--poster'))await call('Page.navigate',{url:original});ws.close();}
 })().catch(e=>{console.error(e);process.exit(1);});

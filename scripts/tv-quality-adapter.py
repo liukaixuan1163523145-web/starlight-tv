@@ -52,4 +52,7 @@ def apply(source, root):
     replace("if(playing)loading.fail('视频暂时无法播放，请返回换源');if(playing)osd('视频暂时无法播放，请按返回换源',true);", "if(playing)recoveryFail('播放失败');")
     replace('video.onended=function(){', 'video.onended=function(){if(recovery&&(recovery.busy||recovery.restore!==null||recovery.exhausted))return;')
     replace('function save(){if(liveActive', 'function save(){if(recovery&&recovery.restore!==null)return;if(liveActive')
+    replace("function cover(url){return /^https?:\\/\\//.test(url||'')?'/api/poster?url='+encodeURIComponent(url):'';}", (root/'tv/tv-posters.js').read_text('utf8'))
+    replace("var url=cover(item.cover||item.pic);if(url){var img=el('img');img.src=url;img.alt='';img.onerror=function(){img.remove();p.insertBefore(el('span','','暂无海报'),p.firstChild);};p.appendChild(img);}else p.textContent='暂无海报';", "var img=el('img');p.appendChild(img);tvPoster(img,item,item.cover||item.pic);")
+    replace('img.src=cover(detail.videoInfo.cover);info.appendChild(img);', 'info.appendChild(img);tvPoster(img,group,detail.videoInfo.cover);')
     return source

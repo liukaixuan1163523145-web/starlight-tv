@@ -36,7 +36,7 @@ Termux 官方镜像可能清理旧版本包。若锁定包下载不可用，请�
 
 ## 配置与 MDBList
 
-当前 TV 源码构建的是 `1.1.3-local`。数据 ZIP 沿用 `v1.1.2-local` Release，`local-data-manifest.json` 固定其 SHA256。安装包内包含这份 ZIP；普通使用者只下载 APK 即可。片单、评分、原始数据日期和海报均为公开字段，不含个人配置。自行替换数据时用 `scripts/build-local-data.py --input <白名单缓存目录> --output <ZIP路径>` 生成新清单，再构建 APK。
+当前 TV 源码构建的是 `1.1.4-local`。数据 ZIP 沿用 `v1.1.2-local` Release，`local-data-manifest.json` 固定其 SHA256。安装包内包含这份 ZIP；普通使用者只下载 APK 即可。片单、评分、原始数据日期和海报均为公开字段，不含个人配置。自行替换数据时用 `scripts/build-local-data.py --input <白名单缓存目录> --output <ZIP路径>` 生成新清单，再构建 APK。
 
 本地版由包内 `edition.json` 固定启用 `RECOMMEND_LOCAL_ONLY=1`，并在启动时从子进程环境移除 MDBList Key；不要求用户配置密钥，也不联网刷新评分或海报。下文密钥配置仅适用于 1.1.1 联网版或开发者自己的联网部署。
 
@@ -64,3 +64,5 @@ APK 内 `assets/payload.zip` 包含 ARM Node、必需动态库、Next standalone
 `node scripts/test-tv-quality.cjs` 使用 `.build-mobile/test-media/` 下的本机 HLS 测试媒体进行桌面回归，需 Playwright 和 Chrome。`node scripts/test-tv-quality.cjs --serve` 启动仅监听本机 18087 端口的测试夹具。测试结果写入 `.build/tv-tests/`，不打入 APK。
 
 真机诊断可用 `build-apk.ps1 -Debuggable` 生成独立命名的调试 APK，原包名和签名覆盖安装。通过 ADB 将该进程的 WebView 调试 socket 转发到本机 19222，并反向转发 18087 后，执行 `node scripts/test-tv-device.cjs`；`--public` 使用电视当前配置抽查《请回答1988》并注入一次媒体错误。调试版只用于验证，发布和最终安装使用不带 `-Debuggable` 的包。正式包关闭应用及 WebView 调试，测试结束移除 ADB 转发。
+
+海报修复入口为 `tv/tv-posters.js`：首页仍离线；搜索、选集、历史先查候选图缓存，缺失时调用已有 `source=1` 海报接口补图。回归命令 `node scripts/test-tv-posters.cjs`，真机调试命令 `node scripts/test-tv-device.cjs --poster` 自动复查《潜伏6》搜索、选集图片解码与服务端缓存命中。

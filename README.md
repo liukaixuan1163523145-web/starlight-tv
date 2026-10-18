@@ -2,7 +2,7 @@
 
 提供适配遥控器大屏的星幕 TV，以及适配触摸操作的星幕手机版。基于 [LibreSpark/LibreTV](https://github.com/LibreSpark/LibreTV) 的 Next.js 版本改造，服务端随 APK 在 Android 设备本机运行，无需电脑常开。
 
-**[下载手机版 beta13](https://github.com/liukaixuan1163523145-web/starlight-tv/releases/tag/v1.2.0-mobile-beta13)** · **[下载 TV 版](https://github.com/liukaixuan1163523145-web/starlight-tv/releases/tag/v1.1.3-local)** · [手机操作与构建](docs/MOBILE.md) · [安装与操作](docs/USAGE.md) · [从源码构建](docs/BUILD.md) · [上游与许可证](THIRD_PARTY_NOTICES.md) · [赞助支持](#支持项目)
+**[下载手机版 beta13](https://github.com/liukaixuan1163523145-web/starlight-tv/releases/tag/v1.2.0-mobile-beta13)** · **[下载 TV 版](https://github.com/liukaixuan1163523145-web/starlight-tv/releases/tag/v1.1.4-local)** · [手机操作与构建](docs/MOBILE.md) · [安装与操作](docs/USAGE.md) · [从源码构建](docs/BUILD.md) · [上游与许可证](THIRD_PARTY_NOTICES.md) · [赞助支持](#支持项目)
 
 ![星幕 TV](android/res/drawable/tv_banner.png)
 
@@ -11,7 +11,7 @@
 | 设备 | 版本 | 安装包与状态 |
 | --- | --- | --- |
 | Android 手机 | [1.2.0-mobile-beta13](https://github.com/liukaixuan1163523145-web/starlight-tv/releases/tag/v1.2.0-mobile-beta13) | ARM64 测试版；已在小米 17 Pro Max / Android 16 安装、启动，具体验证边界见发布说明 |
-| Android TV | [1.1.3-local](https://github.com/liukaixuan1163523145-web/starlight-tv/releases/tag/v1.1.3-local) | ARMv7 本地数据版；多来源排序、自动换源续播，已在小米电视 / Android 9 验证 |
+| Android TV | [1.1.4-local](https://github.com/liukaixuan1163523145-web/starlight-tv/releases/tag/v1.1.4-local) | ARMv7 本地数据版；多来源排序、自动换源续播，已在小米电视 / Android 9 验证 |
 
 两个版本均无需 API Key，普通使用者只下载对应 APK；包名不同，可以并存。已安装同版应用时直接覆盖更新，保留历史和设置。首次启动预留至少 1 GiB 空间。
 
@@ -32,12 +32,12 @@
 - 播放失败或持续卡顿约 12 秒时自动换源，首次加载允许 20 秒；最多尝试 3 个备用记录，保留同集进度与倍速，跳过缺集和时长明显不匹配版本。
 - 来源按钮固定五列，测速排序不移动正在聚焦的来源；语言标注不等同实际音轨，换源可能因剪辑差异存在时间偏差。
 - 豆瓣推荐和通过 MDBList 获取的烂番茄评分；推荐展示前检查可用来源。
-- 本地数据版内置推荐、评分和海报，不需要 API Key，不联网更新片单。
+- 本地数据版内置推荐、评分和海报，不需要 API Key，不联网更新片单；搜索与选集缺图按需缓存，并尝试备用图片。
 - 本地缓存中心查看真实条目数量与海报占用；片单标注原始数据日期。
 
 ## TV 版当前版本
 
-**1.1.3-local** 是无需 API Key 的本地数据版，安装包自带公开片单和海报快照。保留原应用 ID 与签名，可覆盖旧版本并保留配置与历史。
+**1.1.4-local** 是无需 API Key 的本地数据版，安装包自带公开片单和海报快照。保留原应用 ID 与签名，可覆盖旧版本并保留配置与历史。
 
 需要联网补充推荐、使用自己的 MDBList Key，可选择仍保留的 [1.1.1 联网版](https://github.com/liukaixuan1163523145-web/starlight-tv/releases/tag/v1.1.1)。本地版即使检测到旧 Key 也不会调用 MDBList。
 
@@ -45,15 +45,15 @@
 
 首次启动需要解包本地服务、片单和海报，耗时比联网版长。打开应用后电脑可以关机，无需另装 Termux。APK 不包含个人 API Key、登录密码或观看记录。
 
-内置豆瓣 3,967 部（164 页），以及通过 MDBList 整理的 2,901 部电影和 1,622 部剧集的烂番茄评分。两套片单存在重合，不能相加当成不重复影片总数。海报实际数量与快照 SHA256 见 [数据清单](local-data-manifest.json)。缺少的海报显示占位文字，不影响按片名搜索。
+内置豆瓣 3,967 部（164 页），以及通过 MDBList 整理的 2,901 部电影和 1,622 部剧集的烂番茄评分。两套片单存在重合，不能相加当成不重复影片总数。海报实际数量与快照 SHA256 见 [数据清单](local-data-manifest.json)。搜索、选集和继续看优先复用缓存海报，缺图时按需下载并保存；所有候选失败才显示占位文字。
 
-本地版不向豆瓣、MDBList 或海报网站请求推荐更新。评分是快照，并非实时评分；更新片单需安装后续本地数据版。搜索、来源可用性检查、测速和影片/直播播放仍需联网；缓存不包含完整影片。
+本地版不向豆瓣、MDBList 请求推荐更新；首页海报仍读取内置快照，搜索、选集和继续看的缺失海报可联网补充。评分是快照，并非实时评分；更新片单需安装后续本地数据版。搜索、来源可用性检查、测速和影片/直播播放仍需联网；缓存不包含完整影片。
 
 ## 来源与维护
 
 影视和直播接口由外部站点提供，可能变动或失效。自动测速是短片段采样，不是带宽保证；备用源不能保证永久可用。本项目不存储影片、不提供付费授权或绕过播放限制。请配置你有权访问的来源。
 
-根目录许可证沿用 **AGPL-3.0-or-later**。这是独立改造项目，不是 LibreTV 官方发行版。完整 Web/服务端代码位于 `app/`，Android 外壳位于 `android/`，手机适配位于 `mobile/`。构建 TV 1.1.3-local 请检出 `v1.1.3-local` 标签；手机 beta13 使用 `v1.2.0-mobile-beta13`，避免将新共享代码误当成旧 TV APK 的源码。
+根目录许可证沿用 **AGPL-3.0-or-later**。这是独立改造项目，不是 LibreTV 官方发行版。完整 Web/服务端代码位于 `app/`，Android 外壳位于 `android/`，手机适配位于 `mobile/`。构建 TV 1.1.4-local 请检出 `v1.1.4-local` 标签；手机 beta13 使用 `v1.2.0-mobile-beta13`，避免将新共享代码误当成旧 TV APK 的源码。
 
 ## 支持项目
 
